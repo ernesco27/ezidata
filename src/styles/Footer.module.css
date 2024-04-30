@@ -1,0 +1,23 @@
+.footer {
+  width: 100vw;
+  height: 20vw;
+  background-color: brown;
+  margin-top: 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: white;
+}
+
+.footer > p {
+  font-size: 0.8rem;
+}
+
+.links {
+  list-style-type: none;
+  display: flex;
+  gap: 1rem;
+  font-size: 1rem;
+  padding-top: 1.5rem;
+}

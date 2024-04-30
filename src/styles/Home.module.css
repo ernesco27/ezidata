@@ -1,0 +1,29 @@
+.imageDiv {
+  width: 100vw;
+  height: 40vh;
+  background-color: brown;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.networkContainer {
+  width: 100vw;
+  display: flex;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+  padding: 0 1rem;
+}
+
+.mainSection {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  padding-top: 1.5rem;
+}

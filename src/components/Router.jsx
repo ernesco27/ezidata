@@ -2,6 +2,8 @@ import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import { App } from "../components/App";
 import { ErrorPage } from "../components/ErrorPage";
 import { Home } from "../components/Home";
+import { Airteltigo } from "./Airteltigo";
+import { Mtn } from "./Mtn";
 
 function Router() {
   const router = createBrowserRouter([
@@ -14,14 +16,14 @@ function Router() {
           index: true,
           element: <Home />,
         },
-        // {
-        //   path: "/Shop",
-        //   element: <Shop />,
-        // },
-        // {
-        //   path: "/Cart",
-        //   element: <Cart />,
-        // },
+        {
+          path: "/Mtn",
+          element: <Mtn />,
+        },
+        {
+          path: "/Airteltigo",
+          element: <Airteltigo />,
+        },
         // {
         //   path: "/Checkout",
         //   element: <Checkout />,
