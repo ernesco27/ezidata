@@ -11,6 +11,7 @@ import InputLabel from "@mui/material/InputLabel";
 import FormControl from "@mui/material/FormControl";
 
 import { usePaystackPayment } from "react-paystack";
+import { AlertNote } from "./Alert";
 
 const BootstrapInput = styled(InputBase)(({ theme }) => ({
   "label + &": {
@@ -58,12 +59,10 @@ function InfoModal({ amount, volume, onClose }) {
   const config = {
     reference: new Date().getTime().toString(),
     email: "user@example.com",
-    amount: 20000, //Amount is in the country's lowest currency. E.g Kobo, so 20000 kobo = N200
+    amount: amount * 100, //Amount is in the country's lowest currency. E.g Kobo, so 20000 kobo = N200
     publicKey: "pk_test_25062f521ad4c442c1b5da503d2826fd46e91f99",
     currency: "GHS",
   };
-
-  const [info, setInfo] = useState(config);
 
   // you can call this function anything
   const onSuccess = (reference) => {
@@ -77,7 +76,11 @@ function InfoModal({ amount, volume, onClose }) {
     console.log("closed");
   };
 
-  const initializePayment = usePaystackPayment(info);
+  const initializePayment = usePaystackPayment(config);
+
+  const handlePayNow = () => {
+    initializePayment(onSuccess, onPaystackClose);
+  };
 
   const handleClose = () => {
     setOpen(false);
@@ -158,8 +161,10 @@ function InfoModal({ amount, volume, onClose }) {
                     type="button"
                     className="inline-flex w-full justify-center rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 sm:ml-3 sm:w-auto"
                     onClick={() => {
-                      setOpen(false);
-                      initializePayment(onSuccess, onPaystackClose);
+                      //setOpen(false);
+                      handleClose();
+                      //initializePayment(onSuccess, onPaystackClose);
+                      handlePayNow();
                     }}
                   >
                     Pay Now
