@@ -4,6 +4,8 @@ import { ErrorPage } from "../components/ErrorPage";
 import { Home } from "../components/Home";
 import { Airteltigo } from "./Airteltigo";
 import { Mtn } from "./Mtn";
+import { AdminLogin } from "./AdminLogin";
+import { AdminDashboard } from "../pages/dashboard/AdminDashboard";
 
 function Router() {
   const router = createBrowserRouter([
@@ -24,14 +26,14 @@ function Router() {
           path: "/Airteltigo",
           element: <Airteltigo />,
         },
-        // {
-        //   path: "/Checkout",
-        //   element: <Checkout />,
-        // },
-        // {
-        //   path: "/Product",
-        //   element: <ProductPage />,
-        // },
+        {
+          path: "/Eziadmin",
+          element: <AdminLogin />,
+        },
+        {
+          path: "/Dashboard",
+          element: <AdminDashboard />,
+        },
       ],
     },
   ]);
