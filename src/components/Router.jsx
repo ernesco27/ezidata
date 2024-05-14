@@ -5,7 +5,7 @@ import { Home } from "../components/Home";
 import { Airteltigo } from "./Airteltigo";
 import { Mtn } from "./Mtn";
 import { AdminLogin } from "./AdminLogin";
-import { AdminDashboard } from "../pages/dashboard/AdminDashboard";
+import { AdminDashboard } from "../components/AdminDashboard";
 
 function Router() {
   const router = createBrowserRouter([
