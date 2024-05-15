@@ -1,15 +1,12 @@
 import React from "react";
-import { TempDrawer } from "./Drawer";
 import { Table } from "./DataTable";
 import { Chart } from "./Chart";
-
 import { Analytics } from "./Analytics";
 
-function AdminDashboard() {
+function Dashboard() {
   return (
     <div>
-      <TempDrawer />
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-6 m-6">
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-6 m-6 mt-24">
         <div className="pl-7 bg-cyan-400 h-36 rounded-md shadow-md">
           <Analytics
             title="New Orders"
@@ -58,4 +55,4 @@ function AdminDashboard() {
   );
 }
 
-export { AdminDashboard };
+export { Dashboard };
