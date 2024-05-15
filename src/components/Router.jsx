@@ -26,16 +26,21 @@ function Router() {
           path: "/Airteltigo",
           element: <Airteltigo />,
         },
-        {
-          path: "/Eziadmin",
-          element: <AdminLogin />,
-        },
-        {
-          path: "/Dashboard",
-          element: <AdminDashboard />,
-        },
+        // {
+        //   path: "/Eziadmin",
+        //   element: <AdminLogin />,
+        // },
+        // {
+        //   path: "/Dashboard",
+        //   element: <AdminDashboard />,
+        // },
       ],
     },
+    {
+      path: "/auth",
+      element: <AdminLogin />,
+    },
+    { path: "/dashboard", element: <AdminDashboard /> },
   ]);
 
   return (
