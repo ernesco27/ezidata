@@ -3,14 +3,29 @@ import { NetworkCard } from "./NetworkCard";
 import { networkContext } from "./App";
 import style from "../styles/Packages.module.css";
 
+import Button from "@mui/material/Button";
+
+import SendIcon from "@mui/icons-material/Send";
+import Stack from "@mui/material/Stack";
+
 function Packages() {
-  const { network } = useContext(networkContext);
+  const { network, addNetwork } = useContext(networkContext);
 
   return (
     <div className={style.container}>
       <div className={style.mainSection}>
+        <div>
+          <Stack direction="row" spacing={2}>
+            <Button variant="outlined" startIcon={<SendIcon />}>
+              Add Network
+            </Button>
+            <Button variant="contained" endIcon={<SendIcon />}>
+              Add Package
+            </Button>
+          </Stack>
+        </div>
         <h1>Packages</h1>
-        {console.log(network)}
+
         <div className={style.networkContainer}>
           {network.map((item) => (
             <NetworkCard

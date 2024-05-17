@@ -1,5 +1,4 @@
 import React, { useState, createContext } from "react";
-import { v4 as uuidv4 } from "uuid";
 import { Outlet } from "react-router-dom";
 import { NavBar } from "./NavBar";
 import { AdminNav } from "./AdminNav";
@@ -8,6 +7,7 @@ import style from "../styles/App.module.css";
 
 const networkContext = createContext({
   network: [],
+  addNetwork: () => {},
 });
 
 function App() {
@@ -16,24 +16,35 @@ function App() {
   const availableNetworks = [
     {
       networkName: "MTN",
-      imageUrl: "src/assets/mtn.jpg",
+      imageUrl: "/src/assets/mtn.jpg",
       description: "Click to view all MTN packages",
-      id: uuidv4(),
+      id: 1,
       to: "/Mtn",
     },
     {
       networkName: "AirtelTigo",
-      imageUrl: "src/assets/airteltigo.jpg",
+      imageUrl: "/src/assets/airteltigo.jpg",
       description: "Click to view all AirtelTigo packages",
-      id: uuidv4(),
+      id: 2,
       to: "Airteltigo",
     },
   ];
 
   const [network, setNetwork] = useState(availableNetworks);
 
+  const addNetwork = (networkName, imageUrl, description, to) => {
+    const newNetwork = {
+      id: network.length ? Math.max(...network.map((item) => item.id)) + 1 : 1,
+      networkName,
+      imageUrl,
+      description,
+      to,
+    };
+    setNetwork((prevNetwork) => [...prevNetwork, newNetwork]);
+  };
+
   return (
-    <networkContext.Provider value={{ network }}>
+    <networkContext.Provider value={{ network, addNetwork }}>
       <div>
         <div className={style.nav}>{adminLog ? <AdminNav /> : <NavBar />}</div>
         <div className="">

@@ -2,7 +2,6 @@ import React from "react";
 import style from "../styles/Home.module.css";
 import { useState, useContext } from "react";
 import { NetworkCard } from "./NetworkCard";
-//import { v4 as uuidv4 } from "uuid";
 import { networkContext } from "./App";
 
 function Home() {
@@ -15,6 +14,7 @@ function Home() {
       </header>
       <main className={style.mainSection}>
         <h2>Available Networks</h2>
+        {console.log(network)}
 
         <div className={style.networkContainer}>
           {network.map((item) => (
