@@ -27,6 +27,7 @@ import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import InboxIcon from "@mui/icons-material/MoveToInbox";
+import { Link } from "react-router-dom";
 
 const drawerWidth = 240;
 
@@ -298,14 +299,18 @@ function AdminNav() {
         </DrawerHeader>
         <Divider />
         <List>
-          {["Dashboard", "Packages"].map((text, index) => (
+          {["Dashboard", "Packages"].map((text) => (
             <ListItem key={text} disablePadding>
-              <ListItemButton>
-                <ListItemIcon>
-                  {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-                </ListItemIcon>
-                <ListItemText primary={text} />
-              </ListItemButton>
+              <Link to={`/admin/${text}`}>
+                <ListItemButton>
+                  <ListItemIcon>
+                    {text === "Dashboard" ? <MailIcon /> : null}
+                    {text === "Packages" ? <MailIcon /> : null}
+                    {text === "Configuration" ? <MailIcon /> : null}
+                  </ListItemIcon>
+                  <ListItemText primary={text} />
+                </ListItemButton>
+              </Link>
             </ListItem>
           ))}
         </List>

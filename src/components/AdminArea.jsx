@@ -6,8 +6,6 @@ import { Outlet } from "react-router-dom";
 function AdminArea() {
   return (
     <div>
-      <AdminNav />
-
       <Outlet />
     </div>
   );

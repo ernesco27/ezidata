@@ -1,21 +1,16 @@
-import React from "react";
-import style from "../styles/Home.module.css";
-import { useState, useContext } from "react";
+import React, { useState, useContext } from "react";
 import { NetworkCard } from "./NetworkCard";
-//import { v4 as uuidv4 } from "uuid";
 import { networkContext } from "./App";
+import style from "../styles/Packages.module.css";
 
-function Home() {
+function Packages() {
   const { network } = useContext(networkContext);
 
   return (
     <div className={style.container}>
-      <header>
-        <div className={style.imageDiv}></div>
-      </header>
-      <main className={style.mainSection}>
-        <h2>Available Networks</h2>
-
+      <div className={style.mainSection}>
+        <h1>Packages</h1>
+        {console.log(network)}
         <div className={style.networkContainer}>
           {network.map((item) => (
             <NetworkCard
@@ -27,9 +22,9 @@ function Home() {
             />
           ))}
         </div>
-      </main>
+      </div>
     </div>
   );
 }
 
-export { Home };
+export { Packages };

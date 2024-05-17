@@ -7,6 +7,7 @@ import { Mtn } from "./Mtn";
 import { AdminLogin } from "./AdminLogin";
 import { AdminArea } from "../components/AdminArea";
 import { Dashboard } from "./Dashboard";
+import { Packages } from "./Packages";
 
 function Router() {
   const router = createBrowserRouter([
@@ -27,24 +28,26 @@ function Router() {
           path: "/Airteltigo",
           element: <Airteltigo />,
         },
-        // {
-        //   path: "/Eziadmin",
-        //   element: <AdminLogin />,
-        // },
-        // {
-        //   path: "/Dashboard",
-        //   element: <AdminDashboard />,
-        // },
+        {
+          path: "/auth",
+          element: <AdminLogin />,
+        },
+        {
+          path: "/admin",
+          element: <AdminArea />,
+          children: [
+            {
+              index: true,
+              element: <AdminLogin />,
+            },
+            { path: "/admin/dashboard", element: <Dashboard /> },
+            {
+              path: "/admin/packages",
+              element: <Packages />,
+            },
+          ],
+        },
       ],
-    },
-    {
-      path: "/auth",
-      element: <AdminLogin />,
-    },
-    {
-      path: "/admin",
-      element: <AdminArea />,
-      children: [{ index: true, element: <Dashboard /> }],
     },
   ]);
 
