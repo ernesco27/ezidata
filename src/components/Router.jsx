@@ -8,6 +8,7 @@ import { AdminLogin } from "./AdminLogin";
 import { AdminArea } from "../components/AdminArea";
 import { Dashboard } from "./Dashboard";
 import { Packages } from "./Packages";
+import { PackageDetails } from "./PackageDetails";
 
 function Router() {
   const router = createBrowserRouter([
@@ -21,13 +22,10 @@ function Router() {
           element: <Home />,
         },
         {
-          path: "/Mtn",
-          element: <Mtn />,
+          path: "/network/:networkName",
+          element: <PackageDetails />,
         },
-        {
-          path: "/Airteltigo",
-          element: <Airteltigo />,
-        },
+
         {
           path: "/auth",
           element: <AdminLogin />,

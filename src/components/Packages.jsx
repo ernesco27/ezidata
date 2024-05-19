@@ -55,11 +55,10 @@ function Packages() {
         <div className={style.networkContainer}>
           {network.map((item) => (
             <NetworkCard
-              key={item.id}
+              key={item.networkName}
               title={item.networkName}
               image={item.imageUrl}
               description={item.description}
-              to={item.to}
             />
           ))}
         </div>

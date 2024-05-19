@@ -19,14 +19,12 @@ function App() {
       imageUrl: "/src/assets/mtn.jpg",
       description: "Click to view all MTN packages",
       id: 1,
-      to: "/Mtn",
     },
     {
       networkName: "AirtelTigo",
       imageUrl: "/src/assets/airteltigo.jpg",
       description: "Click to view all AirtelTigo packages",
       id: 2,
-      to: "Airteltigo",
     },
   ];
 

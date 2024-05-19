@@ -28,6 +28,26 @@ const style = {
 function NetworkModal({ networkModal, handleNetwork, handleClose }) {
   const { network, addNetwork } = useContext(networkContext);
 
+  const [networkName, setNetworkName] = useState("");
+  const [description, setDescription] = useState("");
+  const [imageUrl, setImageUrl] = useState("");
+
+  const handleSave = () => {
+    addNetwork(networkName, imageUrl, description);
+    handleClose();
+  };
+
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setImageUrl(reader.result); // base64 encoded image
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
   return (
     <div>
       <Modal
@@ -43,6 +63,8 @@ function NetworkModal({ networkModal, handleNetwork, handleClose }) {
             label="Network Name"
             type="search"
             size="small"
+            value={networkName}
+            onChange={(e) => setNetworkName(e.target.value)}
           />
 
           <TextField
@@ -51,6 +73,8 @@ function NetworkModal({ networkModal, handleNetwork, handleClose }) {
             multiline
             maxRows={4}
             size="small"
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
           />
 
           <Divider>
@@ -62,9 +86,11 @@ function NetworkModal({ networkModal, handleNetwork, handleClose }) {
             name="network-pic"
             id="network-pic"
             className="my-6"
+            onChange={handleImageChange}
           />
+
           <Button
-            onClick={handleClose}
+            onClick={handleSave}
             variant="contained"
             endIcon={<SendIcon />}
           >

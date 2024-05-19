@@ -28,7 +28,7 @@ const style = {
   flexDirection: "column",
 };
 
-const unit = ["GB", "MB"];
+const unit = ["TB", "GB", "MB"];
 
 function PackagesModal({ packagesModal, handlePackage, handleClosePackage }) {
   const [network, setNetwork] = useState("");

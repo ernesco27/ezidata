@@ -5,10 +5,10 @@ import Typography from "@mui/material/Typography";
 import { CardActionArea } from "@mui/material";
 import { Link } from "react-router-dom";
 
-function NetworkCard({ title, image, description, to }) {
+function NetworkCard({ title, image, description }) {
   return (
     <Card sx={{ maxWidth: 345 }}>
-      <CardActionArea component={Link} to={to}>
+      <CardActionArea component={Link} to={`/network/${title}`}>
         <CardMedia
           component="img"
           height="140"
