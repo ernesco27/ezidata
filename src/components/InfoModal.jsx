@@ -1,5 +1,5 @@
 import React from "react";
-import { Fragment, useRef, useState, useContext } from "react";
+import { Fragment, useRef, useState, useContext, useEffect } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { ExclamationTriangleIcon } from "@heroicons/react/24/outline";
 
@@ -53,7 +53,7 @@ const BootstrapInput = styled(InputBase)(({ theme }) => ({
   },
 }));
 
-function InfoModal({ unit, amount, volume, onClose }) {
+function InfoModal({ network, unit, amount, volume, onClose }) {
   const [open, setOpen] = useState(true);
   const [alert, setAlert] = useState(null);
   const [phoneNumber, setPhoneNumber] = useState("");
@@ -74,7 +74,12 @@ function InfoModal({ unit, amount, volume, onClose }) {
   const onSuccess = (reference) => {
     // Implementation for whatever you want to do with reference and after success call.
     console.log(reference);
+
     sendOrder(reference.reference, phoneNumber, network, unit, volume, amount);
+    setAlert({
+      severity: "success",
+      message: "Payment was successful!",
+    });
   };
 
   // you can call this function anything
@@ -144,6 +149,9 @@ function InfoModal({ unit, amount, volume, onClose }) {
                         </Dialog.Title>
                         <div className="mt-2">
                           <div className="text-sm text-gray-500 w-72">
+                            {network}
+                          </div>
+                          <div className="text-sm text-gray-500 w-72">
                             {`${volume} ${unit}`}
                           </div>
                           <div className="text-sm text-gray-500 w-72">
@@ -193,8 +201,8 @@ function InfoModal({ unit, amount, volume, onClose }) {
           </div>
         </Dialog>
       </Transition.Root>
-      {/* {console.log(alert)}
-      {alert && <AlertNote severity={alert.severity} message={alert.message} />} */}
+
+      {alert && <AlertNote severity={alert.severity} message={alert.message} />}
     </>
   );
 }

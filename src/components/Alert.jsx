@@ -2,9 +2,9 @@ import React from "react";
 import Alert from "@mui/material/Alert";
 import Button from "@mui/material/Button";
 
-function AlertNote({ item, severity, message }) {
+function AlertNote({ severity, message }) {
   return (
-    <div className="alert">
+    <div className="alert z-50">
       <Alert
         variant="filled"
         severity={severity}

@@ -52,6 +52,7 @@ function PackageDetails() {
       ))}
       {selectedProduct && (
         <InfoModal
+          network={selectedNetwork.networkName}
           volume={selectedProduct.volume}
           amount={selectedProduct.price}
           unit={selectedProduct.unit}

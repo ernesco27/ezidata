@@ -104,12 +104,10 @@ function App() {
       processed: false,
     };
 
+    console.log("sendOrder called with:", newOrder);
+
     setOrder((prevOrder) => [...prevOrder, newOrder]);
   };
-
-  useEffect(() => {
-    console.log("Updated orders:", order);
-  }, [order]);
 
   return (
     <networkContext.Provider
