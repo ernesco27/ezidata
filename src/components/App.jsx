@@ -1,4 +1,4 @@
-import React, { useState, createContext } from "react";
+import React, { useState, createContext, useEffect } from "react";
 import { Outlet } from "react-router-dom";
 import { NavBar } from "./NavBar";
 import { AdminNav } from "./AdminNav";
@@ -9,6 +9,7 @@ const networkContext = createContext({
   network: [],
   addNetwork: () => {},
   addPackage: () => {},
+  sendOrder: () => {},
 });
 
 function App() {
@@ -31,29 +32,38 @@ function App() {
 
   const Packages = [
     {
-      volume: "35.57MB",
-      amount: "1",
+      network: "MTN",
+      volume: "35.57",
+      price: "1",
       id: 1,
+      unit: "MB",
     },
     {
-      volume: "349.24MB",
-      amount: "3",
+      network: "MTN",
+      volume: "349.24",
+      price: "3",
       id: 2,
+      unit: "MB",
     },
     {
-      volume: "718.91MB",
-      amount: "10",
+      network: "AirtelTigo",
+      volume: "718.91",
+      price: "10",
       id: 3,
+      unit: "MB",
     },
     {
-      volume: "92.88GB",
-      amount: "350",
+      network: "MTN",
+      volume: "92.88",
+      price: "350",
       id: 4,
+      unit: "GB",
     },
   ];
 
   const [network, setNetwork] = useState(availableNetworks);
   const [networkPackage, setNetworkPackage] = useState(Packages);
+  const [order, setOrder] = useState([]);
 
   const addNetwork = (networkName, imageUrl, description, to) => {
     const newNetwork = {
@@ -82,9 +92,35 @@ function App() {
     ]);
   };
 
+  const sendOrder = (reference, phoneNumber, network, unit, volume, price) => {
+    const newOrder = {
+      id: reference,
+      reference,
+      phoneNumber,
+      network,
+      unit,
+      volume,
+      price,
+      processed: false,
+    };
+
+    setOrder((prevOrder) => [...prevOrder, newOrder]);
+  };
+
+  useEffect(() => {
+    console.log("Updated orders:", order);
+  }, [order]);
+
   return (
     <networkContext.Provider
-      value={{ network, addNetwork, networkPackage, addNetworkPackage }}
+      value={{
+        network,
+        addNetwork,
+        networkPackage,
+        addNetworkPackage,
+        order,
+        sendOrder,
+      }}
     >
       <div>
         <div className={style.nav}>{adminLog ? <AdminNav /> : <NavBar />}</div>

@@ -46,7 +46,7 @@ function PackagesModal({ packagesModal, handlePackage, handleClosePackage }) {
   };
 
   const handleSave = () => {
-    addNetworkPackage(selectedNetwork, volume, packageUnit, price);
+    addNetworkPackage(selectedNetwork, packageUnit, volume, price);
     handleClosePackage();
   };
 
@@ -87,6 +87,8 @@ function PackagesModal({ packagesModal, handlePackage, handleClosePackage }) {
             label="Package Unit"
             defaultValue="GB"
             size="small"
+            value={packageUnit}
+            onChange={(e) => setPackageUnit(e.target.value)}
           >
             {unit.map((option) => (
               <MenuItem key={option} value={option}>
@@ -99,12 +101,16 @@ function PackagesModal({ packagesModal, handlePackage, handleClosePackage }) {
             label="Volume"
             type="number"
             size="small"
+            value={volume}
+            onChange={(e) => setVolume(e.target.value)}
           />
           <TextField
             id="outlined-search"
             label="Price"
             type="number"
             size="small"
+            value={price}
+            onChange={(e) => setPrice(e.target.value)}
           />
 
           <Button

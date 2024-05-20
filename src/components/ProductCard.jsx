@@ -6,7 +6,7 @@ import style from "../styles/ProductCard.module.css";
 
 import { InfoModal } from "./InfoModal";
 
-function ProductCard({ volume, amount, onBuyNow }) {
+function ProductCard({ volume, price, unit, onBuyNow }) {
   const [showModal, setShowModal] = useState(false);
 
   const handleInfo = () => {
@@ -19,15 +19,14 @@ function ProductCard({ volume, amount, onBuyNow }) {
       <div className={style.container}>
         <div>
           <p>Volume</p>
-          <div>{volume}</div>
+          <div>{`${volume} ${unit}`}</div>
         </div>
         <div>
-          <p>Amount </p>
-          <div>{amount}</div>
+          <p>Price </p>
+          <div>{price}</div>
         </div>
         <Button onClick={onBuyNow} title="Buy Now" />
       </div>
-      {/* {showModal && <InfoModal />} */}
     </div>
   );
 }

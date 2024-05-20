@@ -1,8 +1,8 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { networkContext } from "./App";
 import { ProductCard } from "../components/ProductCard";
-import { v4 as uuidv4 } from "uuid";
+
 import { InfoModal } from "./InfoModal";
 
 function PackageDetails() {
@@ -10,30 +10,6 @@ function PackageDetails() {
   const { network, networkPackage, addNetworkPackage } =
     useContext(networkContext);
 
-  let mtnPackages = [
-    {
-      volume: "35.57MB",
-      amount: "1",
-      id: uuidv4(),
-    },
-    {
-      volume: "349.24MB",
-      amount: "3",
-      id: uuidv4(),
-    },
-    {
-      volume: "718.91MB",
-      amount: "10",
-      id: uuidv4(),
-    },
-    {
-      volume: "92.88GB",
-      amount: "350",
-      id: uuidv4(),
-    },
-  ];
-
-  const [mtnData, setMtnData] = useState(mtnPackages);
   const [selectedProduct, setSelectedProduct] = useState(null);
 
   const selectedNetwork = network.find((net) => {
@@ -52,24 +28,33 @@ function PackageDetails() {
     setSelectedProduct(null);
   };
 
+  const filteredPackages = networkPackage.filter(
+    (pkg) => pkg.network.toLowerCase() === networkName.toLowerCase()
+  );
+
+  if (filteredPackages.length === 0) {
+    return <div>No packages found for {networkName}</div>;
+  }
+
   return (
     <div>
       <header>
         <img className="" src="/src/assets/mtn.jpg" alt="" />
       </header>
-
-      {networkPackage.map((item) => (
+      {filteredPackages.map((item) => (
         <ProductCard
           key={item.id}
           volume={item.volume}
-          amount={item.amount}
+          price={item.price}
+          unit={item.unit}
           onBuyNow={() => handleBuyNow(item)}
         />
       ))}
       {selectedProduct && (
         <InfoModal
           volume={selectedProduct.volume}
-          amount={selectedProduct.amount}
+          amount={selectedProduct.price}
+          unit={selectedProduct.unit}
           onClose={handleModalClose}
         />
       )}

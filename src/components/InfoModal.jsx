@@ -1,5 +1,5 @@
 import React from "react";
-import { Fragment, useRef, useState } from "react";
+import { Fragment, useRef, useState, useContext } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { ExclamationTriangleIcon } from "@heroicons/react/24/outline";
 
@@ -12,6 +12,8 @@ import FormControl from "@mui/material/FormControl";
 
 import { usePaystackPayment } from "react-paystack";
 import { AlertNote } from "./Alert";
+
+import { networkContext } from "./App";
 
 const BootstrapInput = styled(InputBase)(({ theme }) => ({
   "label + &": {
@@ -51,9 +53,12 @@ const BootstrapInput = styled(InputBase)(({ theme }) => ({
   },
 }));
 
-function InfoModal({ amount, volume, onClose }) {
+function InfoModal({ unit, amount, volume, onClose }) {
   const [open, setOpen] = useState(true);
   const [alert, setAlert] = useState(null);
+  const [phoneNumber, setPhoneNumber] = useState("");
+
+  const { order, sendOrder } = useContext(networkContext);
 
   const cancelButtonRef = useRef(null);
 
@@ -69,8 +74,7 @@ function InfoModal({ amount, volume, onClose }) {
   const onSuccess = (reference) => {
     // Implementation for whatever you want to do with reference and after success call.
     console.log(reference);
-    setAlert({ severity: "success", message: "Payment successful!" });
-    setTimeout(() => setAlert(null), 3000);
+    sendOrder(reference.reference, phoneNumber, network, unit, volume, amount);
   };
 
   // you can call this function anything
@@ -140,10 +144,10 @@ function InfoModal({ amount, volume, onClose }) {
                         </Dialog.Title>
                         <div className="mt-2">
                           <div className="text-sm text-gray-500 w-72">
-                            {volume}
+                            {`${volume} ${unit}`}
                           </div>
                           <div className="text-sm text-gray-500 w-72">
-                            {amount}
+                            {`GH¢ ${amount}`}
                           </div>
                         </div>
                       </div>
@@ -155,7 +159,8 @@ function InfoModal({ amount, volume, onClose }) {
                         Enter Receiving Phone Number
                       </InputLabel>
                       <BootstrapInput
-                        //   defaultValue="react-bootstrap"
+                        value={phoneNumber}
+                        onChange={(e) => setPhoneNumber(e.target.value)}
                         id="bootstrap-input"
                       />
                     </FormControl>
@@ -188,8 +193,8 @@ function InfoModal({ amount, volume, onClose }) {
           </div>
         </Dialog>
       </Transition.Root>
-      {console.log(alert)}
-      {alert && <AlertNote severity={alert.severity} message={alert.message} />}
+      {/* {console.log(alert)}
+      {alert && <AlertNote severity={alert.severity} message={alert.message} />} */}
     </>
   );
 }
