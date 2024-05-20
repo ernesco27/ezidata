@@ -78,7 +78,7 @@ function NetworkModal({ networkModal, handleNetwork, handleClose }) {
           />
 
           <Divider>
-            <Chip label="Cover Image" size="small" />
+            <Chip label="Cover Image (345x140px)" size="small" />
           </Divider>
 
           <input

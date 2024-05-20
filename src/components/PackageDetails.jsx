@@ -7,7 +7,8 @@ import { InfoModal } from "./InfoModal";
 
 function PackageDetails() {
   const { networkName } = useParams();
-  const { network } = useContext(networkContext);
+  const { network, networkPackage, addNetworkPackage } =
+    useContext(networkContext);
 
   let mtnPackages = [
     {
@@ -57,7 +58,7 @@ function PackageDetails() {
         <img className="" src="/src/assets/mtn.jpg" alt="" />
       </header>
 
-      {mtnData.map((item) => (
+      {networkPackage.map((item) => (
         <ProductCard
           key={item.id}
           volume={item.volume}

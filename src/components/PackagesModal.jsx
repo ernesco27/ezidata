@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 
@@ -12,6 +12,8 @@ import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
+
+import { networkContext } from "./App";
 
 const style = {
   position: "absolute",
@@ -31,10 +33,21 @@ const style = {
 const unit = ["TB", "GB", "MB"];
 
 function PackagesModal({ packagesModal, handlePackage, handleClosePackage }) {
-  const [network, setNetwork] = useState("");
+  const { network, networkPackage, addNetworkPackage } =
+    useContext(networkContext);
+
+  const [selectedNetwork, setSelectedNetwork] = useState("");
+  const [volume, setVolume] = useState("");
+  const [packageUnit, setPackageUnit] = useState("");
+  const [price, setPrice] = useState("");
 
   const handleChange = (e) => {
-    setNetwork(e.target.value);
+    setSelectedNetwork(e.target.value);
+  };
+
+  const handleSave = () => {
+    addNetworkPackage(selectedNetwork, volume, packageUnit, price);
+    handleClosePackage();
   };
 
   return (
@@ -54,18 +67,17 @@ function PackagesModal({ packagesModal, handlePackage, handleClosePackage }) {
             <Select
               labelId="demo-simple-select-autowidth-label"
               id="demo-simple-select-autowidth"
-              value={network}
+              value={selectedNetwork}
               onChange={handleChange}
               autoWidth
               label="Network"
               size="small"
             >
-              <MenuItem value="">
-                <em>None</em>
-              </MenuItem>
-              <MenuItem value="MTN">MTN</MenuItem>
-              <MenuItem value="AIRTELTIGO">AIRTELTIGO</MenuItem>
-              <MenuItem value="TELECEL">TELECEL</MenuItem>
+              {network.map((net) => (
+                <MenuItem key={net.id} value={net.networkName}>
+                  {net.networkName}
+                </MenuItem>
+              ))}
             </Select>
           </FormControl>
 
@@ -90,13 +102,13 @@ function PackagesModal({ packagesModal, handlePackage, handleClosePackage }) {
           />
           <TextField
             id="outlined-search"
-            label="Amount"
+            label="Price"
             type="number"
             size="small"
           />
 
           <Button
-            onClick={handleClosePackage}
+            onClick={handleSave}
             variant="contained"
             endIcon={<SendIcon />}
           >
