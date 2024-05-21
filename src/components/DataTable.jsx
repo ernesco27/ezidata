@@ -1,19 +1,20 @@
 import React from "react";
 import DataTable from "react-data-table-component";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "./Button";
 import SearchIcon from "@mui/icons-material/Search";
+import axios from "axios";
 
 function Table() {
   const columns = [
     {
       name: "Tracking No.",
-      selector: (row) => row.tracking,
+      selector: (row) => row.reference,
       sortable: true,
     },
     {
       name: "Phone No.",
-      selector: (row) => row.phone,
+      selector: (row) => row.phoneNumber,
     },
     {
       name: "Network",
@@ -21,11 +22,11 @@ function Table() {
     },
     {
       name: "Data Unit",
-      selector: (row) => row.data,
+      selector: (row) => `${row.volume} ${row.unit}`,
     },
     {
       name: "Amount",
-      selector: (row) => row.amount,
+      selector: (row) => row.price,
     },
     {
       name: "Action",
@@ -38,45 +39,21 @@ function Table() {
     },
   ];
 
-  const data = [
-    {
-      tracking: "1234567890",
-      phone: "1234567890",
-      network: "MTN",
-      data: "1GB",
-      amount: "GH¢10",
-    },
-    {
-      tracking: "1234567891",
-      phone: "1234567890",
-      network: "MTN",
-      data: "10GB",
-      amount: "GH¢100",
-    },
-    {
-      tracking: "1234567892",
-      phone: "1234567892",
-      network: "AT",
-      data: "5GB",
-      amount: "GH¢50",
-    },
-    {
-      tracking: "1234567897",
-      phone: "1234567896",
-      network: "TELECEL",
-      data: "20GB",
-      amount: "GH¢500",
-    },
-    {
-      tracking: "1234567898",
-      phone: "1234567890",
-      network: "MTN",
-      data: "2GB",
-      amount: "GH¢5",
-    },
-  ];
+  const [records, setRecords] = useState([]);
 
-  const [records, setRecords] = useState(data);
+  useEffect(() => {
+    const fetchOrders = async () => {
+      try {
+        const response = await axios.get("http://localhost:3000/api/orders");
+        console.log("Orders retrieved successfully:", response.data);
+        setRecords(response.data);
+      } catch (error) {
+        console.error("Error retrieving orders:", error);
+      }
+    };
+
+    fetchOrders();
+  }, []);
 
   const handleFilter = (e) => {
     const searchNumber = e.target.value;

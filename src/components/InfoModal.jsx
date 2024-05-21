@@ -60,6 +60,14 @@ function InfoModal({ network, unit, amount, volume, onClose }) {
 
   const { order, sendOrder } = useContext(networkContext);
 
+  let currentDate = new Date();
+
+  let year = currentDate.getFullYear();
+  let month = currentDate.getMonth() + 1; // Months are zero-based, so add 1
+  let day = currentDate.getDate();
+
+  let date = `${day}/${month}/${year}`;
+
   const cancelButtonRef = useRef(null);
 
   const config = {
@@ -75,7 +83,15 @@ function InfoModal({ network, unit, amount, volume, onClose }) {
     // Implementation for whatever you want to do with reference and after success call.
     console.log(reference);
 
-    sendOrder(reference.reference, phoneNumber, network, unit, volume, amount);
+    sendOrder(
+      reference.reference,
+      phoneNumber,
+      network,
+      unit,
+      volume,
+      amount,
+      date
+    );
     setAlert({
       severity: "success",
       message: "Payment was successful!",

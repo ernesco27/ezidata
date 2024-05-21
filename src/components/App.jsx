@@ -4,6 +4,7 @@ import { NavBar } from "./NavBar";
 import { AdminNav } from "./AdminNav";
 import { Footer } from "./Footer";
 import style from "../styles/App.module.css";
+import axios from "axios";
 
 const networkContext = createContext({
   network: [],
@@ -92,9 +93,17 @@ function App() {
     ]);
   };
 
-  const sendOrder = (reference, phoneNumber, network, unit, volume, price) => {
+  const sendOrder = async (
+    reference,
+    phoneNumber,
+    network,
+    unit,
+    volume,
+    price,
+    date
+  ) => {
     const newOrder = {
-      id: reference,
+      _id: reference,
       reference,
       phoneNumber,
       network,
@@ -102,11 +111,18 @@ function App() {
       volume,
       price,
       processed: false,
+      date,
     };
 
-    console.log("sendOrder called with:", newOrder);
+    try {
+      const response = axios.post("http://localhost:3000/api/orders", newOrder);
+      console.log("Order sent successfully:", response.data);
 
-    setOrder((prevOrder) => [...prevOrder, newOrder]);
+      setOrder((prevOrder) => [...prevOrder, newOrder]);
+    } catch (error) {
+      console.error("Error sending order:", error);
+      throw error;
+    }
   };
 
   return (
