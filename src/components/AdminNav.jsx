@@ -299,7 +299,7 @@ function AdminNav() {
         </DrawerHeader>
         <Divider />
         <List>
-          {["Dashboard", "Packages"].map((text) => (
+          {["Dashboard", "Packages", "Orders"].map((text) => (
             <ListItem key={text} disablePadding>
               <Link to={`/admin/${text}`}>
                 <ListItemButton>
@@ -307,6 +307,7 @@ function AdminNav() {
                     {text === "Dashboard" ? <MailIcon /> : null}
                     {text === "Packages" ? <MailIcon /> : null}
                     {text === "Configuration" ? <MailIcon /> : null}
+                    {text === "Orders" ? <MailIcon /> : null}
                   </ListItemIcon>
                   <ListItemText primary={text} />
                 </ListItemButton>

@@ -65,6 +65,8 @@ function App() {
   const [network, setNetwork] = useState(availableNetworks);
   const [networkPackage, setNetworkPackage] = useState(Packages);
   const [order, setOrder] = useState([]);
+  const [records, setRecords] = useState([]);
+  const [processedRecords, setProcessedRecords] = useState([]);
 
   const addNetwork = (networkName, imageUrl, description, to) => {
     const newNetwork = {
@@ -125,6 +127,67 @@ function App() {
     }
   };
 
+  useEffect(() => {
+    const fetchOrders = async () => {
+      try {
+        const response = await axios.get("http://localhost:3000/api/orders");
+        console.log("Orders retrieved successfully:", response.data);
+        setRecords(response.data);
+        setProcessedRecords(response.data.filter((order) => !order.processed));
+      } catch (error) {
+        console.error("Error retrieving orders:", error);
+      }
+    };
+
+    fetchOrders();
+  }, []);
+
+  const handleFilter = (e) => {
+    const searchNumber = e.target.value;
+    const newFilter = records.filter((row) => {
+      return row.reference.includes(searchNumber);
+    });
+
+    setRecords(newFilter);
+  };
+
+  const handleMarkAsProcessed = async (id) => {
+    // Find the order by reference
+    const orderToUpdate = records.find((record) => record._id === id);
+
+    if (!orderToUpdate) {
+      console.error("Order not found");
+      return;
+    }
+
+    // Toggle the processed status
+    const updatedStatus = !orderToUpdate.processed;
+
+    try {
+      // Update the order status in the backend
+      await axios.put(`http://localhost:3000/api/orders/${id}`, {
+        processed: updatedStatus,
+      });
+
+      // Update the state
+      setRecords((prevRecords) =>
+        prevRecords.map((record) =>
+          record.reference === id
+            ? { ...record, processed: updatedStatus }
+            : record
+        )
+      );
+
+      console.log(
+        `Order with tracking number ${id} marked as ${
+          updatedStatus ? "processed" : "unprocessed"
+        }`
+      );
+    } catch (error) {
+      console.error("Error updating order status:", error);
+    }
+  };
+
   return (
     <networkContext.Provider
       value={{
@@ -134,11 +197,15 @@ function App() {
         addNetworkPackage,
         order,
         sendOrder,
+        records,
+        handleMarkAsProcessed,
+        processedRecords,
+        handleFilter,
       }}
     >
-      <div>
+      <div className={style.container}>
         <div className={style.nav}>{adminLog ? <AdminNav /> : <NavBar />}</div>
-        <div className="">
+        <div className={style.content}>
           <Outlet />
         </div>
         <div>

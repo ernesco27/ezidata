@@ -2,3 +2,11 @@
   z-index: 100;
   margin-bottom: 3.5rem;
 }
+
+.container {
+  min-height: 100vh;
+}
+
+.footer {
+  margin-top: auto;
+}

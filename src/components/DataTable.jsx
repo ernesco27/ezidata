@@ -3,14 +3,17 @@ import DataTable from "react-data-table-component";
 import { useState, useEffect } from "react";
 import { Button } from "./Button";
 import SearchIcon from "@mui/icons-material/Search";
-import axios from "axios";
 
-function Table() {
+function Table({ records, handleFilter, handleMarkAsProcessed }) {
   const columns = [
+    {
+      name: "Order Date",
+      selector: (row) => row.date,
+      sortable: true,
+    },
     {
       name: "Tracking No.",
       selector: (row) => row.reference,
-      sortable: true,
     },
     {
       name: "Phone No.",
@@ -25,51 +28,51 @@ function Table() {
       selector: (row) => `${row.volume} ${row.unit}`,
     },
     {
-      name: "Amount",
+      name: "Amount (GH¢)",
       selector: (row) => row.price,
     },
     {
       name: "Action",
       cell: (row) => (
         <Button
-          title={"Mark"}
-          onClick={() => handleMarkAsProcessed(row.tracking)}
+          title={row.processed ? "Sent" : "Mark"}
+          onClick={() => handleMarkAsProcessed(row.reference)}
         />
       ),
     },
   ];
 
-  const [records, setRecords] = useState([]);
+  // const [records, setRecords] = useState([]);
 
-  useEffect(() => {
-    const fetchOrders = async () => {
-      try {
-        const response = await axios.get("http://localhost:3000/api/orders");
-        console.log("Orders retrieved successfully:", response.data);
-        setRecords(response.data);
-      } catch (error) {
-        console.error("Error retrieving orders:", error);
-      }
-    };
+  // useEffect(() => {
+  //   const fetchOrders = async () => {
+  //     try {
+  //       const response = await axios.get("http://localhost:3000/api/orders");
+  //       console.log("Orders retrieved successfully:", response.data);
+  //       setRecords(response.data);
+  //     } catch (error) {
+  //       console.error("Error retrieving orders:", error);
+  //     }
+  //   };
 
-    fetchOrders();
-  }, []);
+  //   fetchOrders();
+  // }, []);
 
-  const handleFilter = (e) => {
-    const searchNumber = e.target.value;
-    const newFilter = records.filter((row) => {
-      return row.tracking.includes(searchNumber);
-    });
+  // const handleFilter = (e) => {
+  //   const searchNumber = e.target.value;
+  //   const newFilter = records.filter((row) => {
+  //     return row.reference.includes(searchNumber);
+  //   });
 
-    setRecords(newFilter);
-  };
+  //   setRecords(newFilter);
+  // };
 
-  const handleMarkAsProcessed = (trackingNumber) => {
-    // Handle marking the order as processed here
-    console.log(
-      `Order with tracking number ${trackingNumber} marked as processed`
-    );
-  };
+  // const handleMarkAsProcessed = (trackingNumber) => {
+  //   // Handle marking the order as processed here
+  //   console.log(
+  //     `Order with tracking number ${trackingNumber} marked as processed`
+  //   );
+  // };
 
   const conditionalRowStyles = [
     {

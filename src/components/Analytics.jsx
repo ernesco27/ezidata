@@ -77,7 +77,7 @@ function Analytics({
 Analytics.propTypes = {
   color: PropTypes.string,
   title: PropTypes.string,
-  count: PropTypes.string,
+  // count: PropTypes.string,
   percentage: PropTypes.number,
   isLoss: PropTypes.bool,
   extra: PropTypes.string,

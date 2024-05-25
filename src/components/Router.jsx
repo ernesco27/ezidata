@@ -9,6 +9,7 @@ import { AdminArea } from "../components/AdminArea";
 import { Dashboard } from "./Dashboard";
 import { Packages } from "./Packages";
 import { PackageDetails } from "./PackageDetails";
+import Orders from "./Orders";
 
 function Router() {
   const router = createBrowserRouter([
@@ -42,6 +43,10 @@ function Router() {
             {
               path: "/admin/packages",
               element: <Packages />,
+            },
+            {
+              path: "/admin/orders",
+              element: <Orders />,
             },
           ],
         },
