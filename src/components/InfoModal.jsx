@@ -11,7 +11,8 @@ import InputLabel from "@mui/material/InputLabel";
 import FormControl from "@mui/material/FormControl";
 
 import { usePaystackPayment } from "react-paystack";
-import { AlertNote } from "./Alert";
+//import { AlertNote } from "./Alert";
+import Alert from "@mui/material/Alert";
 
 import { networkContext } from "./App";
 
@@ -55,10 +56,10 @@ const BootstrapInput = styled(InputBase)(({ theme }) => ({
 
 function InfoModal({ network, unit, amount, volume, onClose }) {
   const [open, setOpen] = useState(true);
-  const [alert, setAlert] = useState(null);
+  // const [alert, setAlert] = useState(false);
   const [phoneNumber, setPhoneNumber] = useState("");
 
-  const { order, sendOrder } = useContext(networkContext);
+  const { order, sendOrder, alert } = useContext(networkContext);
 
   let currentDate = new Date();
 
@@ -92,10 +93,6 @@ function InfoModal({ network, unit, amount, volume, onClose }) {
       amount,
       date
     );
-    setAlert({
-      severity: "success",
-      message: "Payment was successful!",
-    });
   };
 
   // you can call this function anything
@@ -114,6 +111,16 @@ function InfoModal({ network, unit, amount, volume, onClose }) {
     setOpen(false);
     onClose(); // Call the onClose callback to reset state in parent component
   };
+
+  // useEffect(() => {
+  //   if (alert) {
+  //     const timer = setTimeout(() => {
+  //       setAlert(false);
+  //     }, 3000); // Adjust timing as needed
+
+  //     return () => clearTimeout(timer);
+  //   }
+  // }, [alert]);
 
   return (
     <>
@@ -218,7 +225,11 @@ function InfoModal({ network, unit, amount, volume, onClose }) {
         </Dialog>
       </Transition.Root>
 
-      {alert && <AlertNote severity={alert.severity} message={alert.message} />}
+      {/* {alert && (
+        <Alert variant="filled" severity="success">
+          This is a filled success Alert.
+        </Alert>
+      )} */}
     </>
   );
 }

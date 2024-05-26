@@ -3,8 +3,21 @@ import DataTable from "react-data-table-component";
 import { useState, useEffect } from "react";
 import { Button } from "./Button";
 import SearchIcon from "@mui/icons-material/Search";
+import CircularProgress from "@mui/material/CircularProgress";
 
 function Table({ records, handleFilter, handleMarkAsProcessed }) {
+  const [loadingIds, setLoadingIds] = useState([]); // Track loading states for each order
+
+  const markAsProcessed = async (reference) => {
+    // Add the reference to the loadingIds array to show the spinner
+    setLoadingIds((prev) => [...prev, reference]);
+    setTimeout(async () => {
+      await handleMarkAsProcessed(reference);
+      // Remove the reference from the loadingIds array
+      setLoadingIds((prev) => prev.filter((id) => id !== reference));
+    }, 800); // 2 seconds delay
+  };
+
   const columns = [
     {
       name: "Order Date",
@@ -35,44 +48,21 @@ function Table({ records, handleFilter, handleMarkAsProcessed }) {
       name: "Action",
       cell: (row) => (
         <Button
-          title={row.processed ? "Sent" : "Mark"}
-          onClick={() => handleMarkAsProcessed(row.reference)}
+          title={
+            loadingIds.includes(row.reference) ? (
+              <CircularProgress size={24} />
+            ) : row.processed ? (
+              "Sent"
+            ) : (
+              "Mark"
+            )
+          }
+          onClick={() => markAsProcessed(row.reference)}
+          disabled={loadingIds.includes(row.reference)} // Disable button while loading
         />
       ),
     },
   ];
-
-  // const [records, setRecords] = useState([]);
-
-  // useEffect(() => {
-  //   const fetchOrders = async () => {
-  //     try {
-  //       const response = await axios.get("http://localhost:3000/api/orders");
-  //       console.log("Orders retrieved successfully:", response.data);
-  //       setRecords(response.data);
-  //     } catch (error) {
-  //       console.error("Error retrieving orders:", error);
-  //     }
-  //   };
-
-  //   fetchOrders();
-  // }, []);
-
-  // const handleFilter = (e) => {
-  //   const searchNumber = e.target.value;
-  //   const newFilter = records.filter((row) => {
-  //     return row.reference.includes(searchNumber);
-  //   });
-
-  //   setRecords(newFilter);
-  // };
-
-  // const handleMarkAsProcessed = (trackingNumber) => {
-  //   // Handle marking the order as processed here
-  //   console.log(
-  //     `Order with tracking number ${trackingNumber} marked as processed`
-  //   );
-  // };
 
   const conditionalRowStyles = [
     {

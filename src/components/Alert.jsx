@@ -1,19 +1,14 @@
 import React from "react";
 import Alert from "@mui/material/Alert";
 import Button from "@mui/material/Button";
+import style from "../styles/Alert.module.css";
 
-function AlertNote({ severity, message }) {
+function AlertNote({ severity, message, onClose }) {
   return (
-    <div className="alert z-50">
-      <Alert
-        variant="filled"
-        severity={severity}
-        action={
-          <Button color="inherit" size="small">
-            UNDO
-          </Button>
-        }
-      >{`${message}  `}</Alert>
+    <div className={style.alert}>
+      <Alert variant="filled" severity={severity} onClose={onClose}>
+        {`${message}  `}{" "}
+      </Alert>
       ;
     </div>
   );

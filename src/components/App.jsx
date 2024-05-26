@@ -5,6 +5,8 @@ import { AdminNav } from "./AdminNav";
 import { Footer } from "./Footer";
 import style from "../styles/App.module.css";
 import axios from "axios";
+import Alert from "@mui/material/Alert";
+import { AlertNote } from "./Alert";
 
 const networkContext = createContext({
   network: [],
@@ -67,6 +69,8 @@ function App() {
   const [order, setOrder] = useState([]);
   const [records, setRecords] = useState([]);
   const [processedRecords, setProcessedRecords] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [alert, setAlert] = useState(null);
 
   const addNetwork = (networkName, imageUrl, description, to) => {
     const newNetwork = {
@@ -118,9 +122,12 @@ function App() {
 
     try {
       const response = axios.post("http://localhost:3000/api/orders", newOrder);
-      console.log("Order sent successfully:", response.data);
 
       setOrder((prevOrder) => [...prevOrder, newOrder]);
+      setAlert({
+        severity: "success",
+        message: `Order sent successfully.  Reference No: ${newOrder.reference}`,
+      });
     } catch (error) {
       console.error("Error sending order:", error);
       throw error;
@@ -131,7 +138,7 @@ function App() {
     const fetchOrders = async () => {
       try {
         const response = await axios.get("http://localhost:3000/api/orders");
-        console.log("Orders retrieved successfully:", response.data);
+
         setRecords(response.data);
         setProcessedRecords(response.data.filter((order) => !order.processed));
       } catch (error) {
@@ -170,22 +177,35 @@ function App() {
       });
 
       // Update the state
-      setRecords((prevRecords) =>
-        prevRecords.map((record) =>
-          record.reference === id
-            ? { ...record, processed: updatedStatus }
-            : record
-        )
-      );
+      setTimeout(() => {
+        // Update the state
+        setRecords((prevRecords) =>
+          prevRecords.map((record) =>
+            record._id === id ? { ...record, processed: updatedStatus } : record
+          )
+        );
 
-      console.log(
-        `Order with tracking number ${id} marked as ${
-          updatedStatus ? "processed" : "unprocessed"
-        }`
-      );
+        setProcessedRecords((prevRecords) =>
+          prevRecords
+            .map((record) =>
+              record._id === id
+                ? { ...record, processed: updatedStatus }
+                : record
+            )
+            .filter((order) => !order.processed)
+        );
+
+        setLoading(false);
+      }, 800);
+
+      setLoading(false);
     } catch (error) {
       console.error("Error updating order status:", error);
     }
+  };
+
+  const handleClose = () => {
+    setAlert(false);
   };
 
   return (
@@ -201,11 +221,19 @@ function App() {
         handleMarkAsProcessed,
         processedRecords,
         handleFilter,
+        alert,
       }}
     >
       <div className={style.container}>
         <div className={style.nav}>{adminLog ? <AdminNav /> : <NavBar />}</div>
         <div className={style.content}>
+          {alert && (
+            <AlertNote
+              severity={alert.severity}
+              message={alert.message}
+              onClose={handleClose}
+            />
+          )}
           <Outlet />
         </div>
         <div>
