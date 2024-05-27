@@ -16,8 +16,6 @@ const networkContext = createContext({
 });
 
 function App() {
-  const [adminLog, setAdminLog] = useState(true);
-
   const availableNetworks = [
     {
       networkName: "MTN",
@@ -71,6 +69,9 @@ function App() {
   const [processedRecords, setProcessedRecords] = useState([]);
   const [loading, setLoading] = useState(true);
   const [alert, setAlert] = useState(null);
+  const [isAuthenticated, setIsAuthenticated] = useState(() => {
+    return !!localStorage.getItem("isAuthenticated");
+  });
 
   const addNetwork = (networkName, imageUrl, description, to) => {
     const newNetwork = {
@@ -222,10 +223,14 @@ function App() {
         processedRecords,
         handleFilter,
         alert,
+        isAuthenticated,
+        setIsAuthenticated,
       }}
     >
       <div className={style.container}>
-        <div className={style.nav}>{adminLog ? <AdminNav /> : <NavBar />}</div>
+        <div className={style.nav}>
+          {isAuthenticated ? <AdminNav /> : <NavBar />}
+        </div>
         <div className={style.content}>
           {alert && (
             <AlertNote

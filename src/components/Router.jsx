@@ -1,4 +1,8 @@
-import { RouterProvider, createBrowserRouter } from "react-router-dom";
+import {
+  RouterProvider,
+  createBrowserRouter,
+  Navigate,
+} from "react-router-dom";
 import { App } from "../components/App";
 import { ErrorPage } from "../components/ErrorPage";
 import { Home } from "../components/Home";
@@ -12,6 +16,15 @@ import { PackageDetails } from "./PackageDetails";
 import Orders from "./Orders";
 
 function Router() {
+  const isAuthenticated = () => {
+    // Replace this with your actual authentication logic
+    return !!localStorage.getItem("isAuthenticated");
+  };
+
+  const ProtectedRoute = ({ element }) => {
+    return isAuthenticated() ? element : <Navigate to="/auth" />;
+  };
+
   const router = createBrowserRouter([
     {
       path: "/",
@@ -39,14 +52,20 @@ function Router() {
               index: true,
               element: <AdminLogin />,
             },
-            { path: "/admin/dashboard", element: <Dashboard /> },
+            {
+              path: "/admin/dashboard",
+              element: <ProtectedRoute element={<Dashboard />} />,
+              //element: <Dashboard />,
+            },
             {
               path: "/admin/packages",
-              element: <Packages />,
+              element: <ProtectedRoute element={<Packages />} />,
+              //element: <Packages />,
             },
             {
               path: "/admin/orders",
-              element: <Orders />,
+              element: <ProtectedRoute element={<Orders />} />,
+              //element: <Orders />,
             },
           ],
         },
