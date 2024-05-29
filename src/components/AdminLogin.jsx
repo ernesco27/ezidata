@@ -1,11 +1,13 @@
 import React, { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { networkContext } from "./App";
+import CircularProgress from "@mui/material/CircularProgress";
 
 function AdminLogin() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   const { isAuthenticated, setIsAuthenticated } = useContext(networkContext);
@@ -13,6 +15,7 @@ function AdminLogin() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError(""); // Reset error message
+    setLoading(true);
 
     try {
       const response = await fetch("http://localhost:3000/login", {
@@ -33,6 +36,8 @@ function AdminLogin() {
       }
     } catch (err) {
       setError("An error occurred. Please try again.");
+    } finally {
+      setLoading(false);
     }
     //   try {
     //     const response = await axios.post("http://localhost:3000/login", {
@@ -112,8 +117,13 @@ function AdminLogin() {
             <button
               type="submit"
               className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+              disabled={loading}
             >
-              Sign in
+              {loading ? (
+                <CircularProgress size={24} color="inherit" />
+              ) : (
+                "Sign In"
+              )}
             </button>
           </div>
         </form>

@@ -4,6 +4,10 @@ import { useState, useEffect } from "react";
 import { Button } from "./Button";
 import SearchIcon from "@mui/icons-material/Search";
 import CircularProgress from "@mui/material/CircularProgress";
+import { jsPDF } from "jspdf";
+import autoTable from "jspdf-autotable";
+import ExcelJS from "exceljs";
+import { saveAs } from "file-saver";
 
 function Table({ records, handleFilter, handleMarkAsProcessed }) {
   const [loadingIds, setLoadingIds] = useState([]); // Track loading states for each order
@@ -16,6 +20,72 @@ function Table({ records, handleFilter, handleMarkAsProcessed }) {
       // Remove the reference from the loadingIds array
       setLoadingIds((prev) => prev.filter((id) => id !== reference));
     }, 800); // 2 seconds delay
+  };
+
+  const handleDownloadPDF = () => {
+    const doc = new jsPDF();
+    const tableColumn = [
+      "Order Date",
+      "Tracking No.",
+      "Phone No.",
+      "Network",
+      "Data Unit",
+      "Amount (GH¢)",
+    ];
+    const tableRows = [];
+
+    records.forEach((record) => {
+      const recordData = [
+        record.date,
+        record.reference,
+        record.phoneNumber,
+        record.network,
+        `${record.volume} ${record.unit}`,
+        record.price,
+      ];
+      tableRows.push(recordData);
+    });
+
+    autoTable(doc, {
+      head: [tableColumn],
+      body: tableRows,
+    });
+
+    doc.save("table.pdf");
+  };
+
+  const handleDownloadExcel = async () => {
+    const workbook = new ExcelJS.Workbook();
+    const worksheet = workbook.addWorksheet("Data");
+
+    // Add header row
+    worksheet.addRow([
+      "Order Date",
+      "Tracking No.",
+      "Phone No.",
+      "Network",
+      "Data Unit",
+      "Amount (GH¢)",
+    ]);
+
+    // Add data rows
+    records.forEach((record) => {
+      worksheet.addRow([
+        record.date,
+        record.reference,
+        record.phoneNumber,
+        record.network,
+        `${record.volume} ${record.unit}`,
+        record.price,
+      ]);
+    });
+
+    // Generate Excel file buffer and save it
+    const buffer = await workbook.xlsx.writeBuffer();
+    const blob = new Blob([buffer], {
+      type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+    });
+    saveAs(blob, "table.xlsx");
   };
 
   const columns = [
@@ -89,6 +159,20 @@ function Table({ records, handleFilter, handleMarkAsProcessed }) {
             onChange={handleFilter}
           />
         </div>
+      </div>
+      <div className="flex justify-end mb-2">
+        <button
+          onClick={handleDownloadPDF}
+          className="mr-2 px-4 py-2 bg-blue-600 text-white rounded"
+        >
+          Download PDF
+        </button>
+        <button
+          onClick={handleDownloadExcel}
+          className="px-4 py-2 bg-green-600 text-white rounded"
+        >
+          Download Excel
+        </button>
       </div>
       <DataTable
         columns={columns}
