@@ -1,7 +1,6 @@
 .imageDiv {
   width: 100vw;
-  height: 40vh;
-  background-color: brown;
+  overflow: hidden;
 }
 
 .container {
@@ -26,4 +25,11 @@
   align-items: center;
   gap: 1rem;
   padding-top: 1.5rem;
+}
+
+.skeleton {
+  display: flex;
+  flex-wrap: wrap;
+
+  gap: 2rem;
 }

@@ -29,9 +29,13 @@ function NavBar(props) {
 
   const drawer = (
     <Box onClick={handleDrawerToggle} sx={{ textAlign: "center" }}>
-      <Typography variant="h6" sx={{ my: 2 }}>
-        EziData
-      </Typography>
+      <Box sx={{ flexGrow: 1, display: { sm: "block" } }}>
+        <img
+          className=" h-14 w-auto"
+          src="src/assets/images/logo.png"
+          alt="EziData Logo"
+        />
+      </Box>
       <Divider />
       <List>
         {navItems.map((item) => (
@@ -62,13 +66,19 @@ function NavBar(props) {
           >
             <MenuIcon />
           </IconButton>
-          <Typography
-            variant="h6"
-            component="div"
-            sx={{ flexGrow: 1, display: { xs: "none", sm: "block" } }}
+
+          <Box
+            sx={{
+              flexGrow: 1,
+              display: { xs: "block", sm: "block" },
+            }}
           >
-            EziData
-          </Typography>
+            <img
+              className=" h-14 w-auto"
+              src="src/assets/images/logo.png"
+              alt="EziData Logo"
+            />
+          </Box>
           <Box sx={{ display: { xs: "none", sm: "block" } }}>
             {navItems.map((item) => (
               <Button key={item} sx={{ color: "#fff" }}>

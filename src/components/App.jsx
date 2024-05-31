@@ -5,7 +5,6 @@ import { AdminNav } from "./AdminNav";
 import { Footer } from "./Footer";
 import style from "../styles/App.module.css";
 import axios from "axios";
-import Alert from "@mui/material/Alert";
 import { AlertNote } from "./Alert";
 
 const networkContext = createContext({
@@ -16,58 +15,12 @@ const networkContext = createContext({
 });
 
 function App() {
-  const availableNetworks = [
-    {
-      networkName: "MTN",
-      imageUrl: "/src/assets/mtn.jpg",
-      description: "Click to view all MTN packages",
-      id: 1,
-    },
-    {
-      networkName: "AirtelTigo",
-      imageUrl: "/src/assets/airteltigo.jpg",
-      description: "Click to view all AirtelTigo packages",
-      id: 2,
-    },
-  ];
-
-  const Packages = [
-    {
-      network: "MTN",
-      volume: "35.57",
-      price: "1",
-      id: 1,
-      unit: "MB",
-    },
-    {
-      network: "MTN",
-      volume: "349.24",
-      price: "3",
-      id: 2,
-      unit: "MB",
-    },
-    {
-      network: "AirtelTigo",
-      volume: "718.91",
-      price: "10",
-      id: 3,
-      unit: "MB",
-    },
-    {
-      network: "MTN",
-      volume: "92.88",
-      price: "350",
-      id: 4,
-      unit: "GB",
-    },
-  ];
-
-  const [network, setNetwork] = useState(availableNetworks);
-  const [networkPackage, setNetworkPackage] = useState(Packages);
+  const [network, setNetwork] = useState([]);
+  const [networkPackage, setNetworkPackage] = useState([]);
   const [order, setOrder] = useState([]);
   const [records, setRecords] = useState([]);
   const [processedRecords, setProcessedRecords] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [loadingNetwork, setLoadingNetwork] = useState(false);
   const [alert, setAlert] = useState(null);
   const [isAuthenticated, setIsAuthenticated] = useState(() => {
     return !!localStorage.getItem("isAuthenticated");
@@ -75,29 +28,62 @@ function App() {
 
   const addNetwork = (networkName, imageUrl, description, to) => {
     const newNetwork = {
-      id: network.length ? Math.max(...network.map((item) => item.id)) + 1 : 1,
+      _id: network.length
+        ? Math.max(...network.map((item) => item._id)) + 1
+        : 1,
       networkName,
       imageUrl,
       description,
       to,
     };
-    setNetwork((prevNetwork) => [...prevNetwork, newNetwork]);
+
+    try {
+      const response = axios.post(
+        "http://localhost:3000/api/networks",
+        newNetwork
+      );
+
+      setNetwork((prevNetwork) => [...prevNetwork, newNetwork]);
+      setAlert({
+        severity: "success",
+        message: "Network Added successfully",
+      });
+      setLoading(true);
+    } catch (error) {
+      console.error("Error adding newtork:", error);
+      throw error;
+    }
   };
 
   const addNetworkPackage = (network, unit, volume, price) => {
     const newNetworkPackage = {
-      id: networkPackage.length
-        ? Math.max(...networkPackage.map((item) => item.id)) + 1
+      _id: networkPackage.length
+        ? Math.max(...networkPackage.map((item) => item._id)) + 1
         : 1,
       network,
       unit,
       volume,
       price,
     };
-    setNetworkPackage((prevNetworkPackage) => [
-      ...prevNetworkPackage,
-      newNetworkPackage,
-    ]);
+
+    try {
+      const response = axios.post(
+        "http://localhost:3000/api/packages",
+        newNetworkPackage
+      );
+
+      setNetworkPackage((prevNetworkPackage) => [
+        ...prevNetworkPackage,
+        newNetworkPackage,
+      ]);
+      setAlert({
+        severity: "success",
+        message: "Package Saved!",
+      });
+    } catch (error) {
+      console.error("Error sending package:", error);
+      throw error;
+    }
   };
 
   const sendOrder = async (
@@ -148,6 +134,37 @@ function App() {
     };
 
     fetchOrders();
+  }, []);
+
+  useEffect(() => {
+    const fetchNetworks = async () => {
+      setLoadingNetwork(true);
+      try {
+        const response = await axios.get("http://localhost:3000/api/networks");
+
+        setNetwork(response.data);
+      } catch (error) {
+        console.error("Error retrieving networks:", error);
+      } finally {
+        setLoadingNetwork(false);
+      }
+    };
+
+    fetchNetworks();
+  }, []);
+
+  useEffect(() => {
+    const fetchPackages = async () => {
+      try {
+        const response = await axios.get("http://localhost:3000/api/packages");
+
+        setNetworkPackage(response.data);
+      } catch (error) {
+        console.error("Error retrieving networks:", error);
+      }
+    };
+
+    fetchPackages();
   }, []);
 
   const handleFilter = (e) => {
@@ -225,6 +242,7 @@ function App() {
         alert,
         isAuthenticated,
         setIsAuthenticated,
+        loadingNetwork,
       }}
     >
       <div className={style.container}>

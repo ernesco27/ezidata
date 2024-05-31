@@ -17,6 +17,7 @@ function Footer() {
         <li>About Us</li>
         <li>Contact</li>
       </ul>
+
       <p>&copy; {dateInfo} Ezidata. All rights reserved.</p>
     </footer>
   );
