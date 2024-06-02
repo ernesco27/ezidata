@@ -10,3 +10,7 @@
 .footer {
   margin-top: auto;
 }
+
+.content {
+  min-height: 70vh;
+}

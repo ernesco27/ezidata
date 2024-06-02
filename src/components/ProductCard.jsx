@@ -23,7 +23,7 @@ function ProductCard({ volume, price, unit, onBuyNow }) {
         </div>
         <div>
           <p>Price </p>
-          <div>{price}</div>
+          <div>GH¢{price}</div>
         </div>
         <Button onClick={onBuyNow} title="Buy Now" />
       </div>

@@ -11,7 +11,7 @@ import InputLabel from "@mui/material/InputLabel";
 import FormControl from "@mui/material/FormControl";
 
 import { usePaystackPayment } from "react-paystack";
-//import { AlertNote } from "./Alert";
+
 import Alert from "@mui/material/Alert";
 
 import { networkContext } from "./App";
@@ -111,16 +111,6 @@ function InfoModal({ network, unit, amount, volume, onClose }) {
     setOpen(false);
     onClose(); // Call the onClose callback to reset state in parent component
   };
-
-  // useEffect(() => {
-  //   if (alert) {
-  //     const timer = setTimeout(() => {
-  //       setAlert(false);
-  //     }, 3000); // Adjust timing as needed
-
-  //     return () => clearTimeout(timer);
-  //   }
-  // }, [alert]);
 
   return (
     <>
@@ -224,12 +214,6 @@ function InfoModal({ network, unit, amount, volume, onClose }) {
           </div>
         </Dialog>
       </Transition.Root>
-
-      {/* {alert && (
-        <Alert variant="filled" severity="success">
-          This is a filled success Alert.
-        </Alert>
-      )} */}
     </>
   );
 }

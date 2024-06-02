@@ -1,0 +1,46 @@
+.mtnHeader {
+  background-image: url("../assets/images/mtn-header.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  width: 100vw;
+  height: 30vh;
+}
+
+.atHeader {
+  background-image: url("../assets/images/at-header.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  width: 100vw;
+  height: 30vh;
+}
+
+.telecelHeader {
+  background-image: url("../assets/images/telecel-header.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  width: 100vw;
+  height: 30vh;
+}
+
+.title {
+  font-size: 3rem;
+  font-weight: 600;
+  color: blue;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-top: 3rem;
+}
+
+.skeleton {
+  display: flex;
+  flex-wrap: wrap;
+  row-gap: 2rem;
+  margin-top: 1rem;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}

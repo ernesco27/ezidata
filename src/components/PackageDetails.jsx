@@ -2,12 +2,15 @@ import React, { useContext, useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { networkContext } from "./App";
 import { ProductCard } from "../components/ProductCard";
+import style from "../styles/PackageDetails.module.css";
+import Skeleton from "@mui/material/Skeleton";
+import Stack from "@mui/material/Stack";
 
 import { InfoModal } from "./InfoModal";
 
 function PackageDetails() {
   const { networkName } = useParams();
-  const { network, networkPackage, addNetworkPackage } =
+  const { network, networkPackage, loadingPackage } =
     useContext(networkContext);
 
   const [selectedProduct, setSelectedProduct] = useState(null);
@@ -16,9 +19,15 @@ function PackageDetails() {
     return net.networkName.toLowerCase() === networkName.toLowerCase(); // Ensure case-insensitivity
   });
 
-  if (!selectedNetwork) {
-    return <div>Network not found</div>;
-  }
+  // if (!selectedNetwork) {
+  //   return (
+  //     <div>
+  //       <Stack>
+  //         <Skeleton variant="rectangular" width={500} height={118} />
+  //       </Stack>
+  //     </div>
+  //   );
+  // }
 
   const handleBuyNow = (product) => {
     setSelectedProduct(product);
@@ -32,24 +41,66 @@ function PackageDetails() {
     (pkg) => pkg.network.toLowerCase() === networkName.toLowerCase()
   );
 
-  if (filteredPackages.length === 0) {
-    return <div>No packages found for {networkName}</div>;
-  }
+  // if (filteredPackages.length === 0) {
+  //   return (
+  //     <div>
+  //       <Stack>
+  //         <Skeleton variant="rectangular" width={210} height={118} />
+  //       </Stack>
+  //     </div>
+  //   );
+  // }
 
   return (
     <div>
-      <header>
-        <img className="" src="/src/assets/mtn.jpg" alt="" />
-      </header>
-      {filteredPackages.map((item) => (
-        <ProductCard
-          key={item.id}
-          volume={item.volume}
-          price={item.price}
-          unit={item.unit}
-          onBuyNow={() => handleBuyNow(item)}
-        />
-      ))}
+      <header
+        className={
+          networkName === "MTN"
+            ? style.mtnHeader
+            : networkName === "AT"
+            ? style.atHeader
+            : style.telecelHeader
+        }
+      ></header>
+      {loadingPackage ? (
+        <div className={style.skeleton}>
+          <div>
+            <Stack>
+              <Skeleton variant="rounded" width={345} height={50} />
+            </Stack>
+          </div>
+          <div>
+            <Stack>
+              <Skeleton variant="rounded" width={345} height={50} />
+            </Stack>
+          </div>
+          <div>
+            <Stack>
+              <Skeleton variant="rounded" width={345} height={50} />
+            </Stack>
+          </div>
+          <div>
+            <Stack>
+              <Skeleton variant="rounded" width={345} height={50} />
+            </Stack>
+          </div>
+          <div>
+            <Stack>
+              <Skeleton variant="rounded" width={345} height={50} />
+            </Stack>
+          </div>
+        </div>
+      ) : (
+        filteredPackages.map((item) => (
+          <ProductCard
+            key={item._id}
+            volume={item.volume}
+            price={item.price}
+            unit={item.unit}
+            onBuyNow={() => handleBuyNow(item)}
+          />
+        ))
+      )}
       {selectedProduct && (
         <InfoModal
           network={selectedNetwork.networkName}

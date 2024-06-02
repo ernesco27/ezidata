@@ -21,6 +21,7 @@ function App() {
   const [records, setRecords] = useState([]);
   const [processedRecords, setProcessedRecords] = useState([]);
   const [loadingNetwork, setLoadingNetwork] = useState(false);
+  const [loadingPackage, setLoadingPackage] = useState(false);
   const [alert, setAlert] = useState(null);
   const [isAuthenticated, setIsAuthenticated] = useState(() => {
     return !!localStorage.getItem("isAuthenticated");
@@ -155,12 +156,15 @@ function App() {
 
   useEffect(() => {
     const fetchPackages = async () => {
+      setLoadingPackage(true);
       try {
         const response = await axios.get("http://localhost:3000/api/packages");
 
         setNetworkPackage(response.data);
       } catch (error) {
         console.error("Error retrieving networks:", error);
+      } finally {
+        setLoadingPackage(false);
       }
     };
 
@@ -243,6 +247,7 @@ function App() {
         isAuthenticated,
         setIsAuthenticated,
         loadingNetwork,
+        loadingPackage,
       }}
     >
       <div className={style.container}>
