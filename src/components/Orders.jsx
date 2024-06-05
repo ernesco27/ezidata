@@ -39,8 +39,14 @@ function a11yProps(index) {
 export default function BasicTabs() {
   const [value, setValue] = useState(0);
 
-  const { records, processedRecords, handleMarkAsProcessed, handleFilter } =
-    useContext(networkContext);
+  const {
+    records,
+    processedRecords,
+    filteredRecords,
+    handleMarkAsProcessed,
+    handleAllFilter,
+    handleProcessedFilter,
+  } = useContext(networkContext);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -61,14 +67,14 @@ export default function BasicTabs() {
       <CustomTabPanel value={value} index={0}>
         <Table
           records={processedRecords}
-          handleFilter={handleFilter}
+          handleFilter={handleProcessedFilter}
           handleMarkAsProcessed={handleMarkAsProcessed}
         />
       </CustomTabPanel>
       <CustomTabPanel value={value} index={1}>
         <Table
           records={records}
-          handleFilter={handleFilter}
+          handleFilter={handleAllFilter}
           handleMarkAsProcessed={handleMarkAsProcessed}
         />
       </CustomTabPanel>

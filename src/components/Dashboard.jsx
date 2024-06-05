@@ -9,7 +9,8 @@ function Dashboard() {
     records,
     processedRecords,
     handleMarkAsProcessed,
-    handleFilter,
+
+    handleProcessedFilter,
     getWeeklyOrderCount,
   } = useContext(networkContext);
   const [totalSales, setTotalSales] = useState(0);
@@ -69,7 +70,7 @@ function Dashboard() {
           <div>
             <Table
               records={processedRecords}
-              handleFilter={handleFilter}
+              handleFilter={handleProcessedFilter}
               handleMarkAsProcessed={handleMarkAsProcessed}
             />
           </div>

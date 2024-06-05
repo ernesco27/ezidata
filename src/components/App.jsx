@@ -19,7 +19,11 @@ function App() {
   const [networkPackage, setNetworkPackage] = useState([]);
   const [order, setOrder] = useState([]);
   const [records, setRecords] = useState([]);
+  const [originalRecords, setOriginalRecords] = useState([]);
+
   const [processedRecords, setProcessedRecords] = useState([]);
+  const [originalProcessedRecords, setOriginalProcessedRecords] = useState([]);
+
   const [loadingNetwork, setLoadingNetwork] = useState(false);
   const [loadingPackage, setLoadingPackage] = useState(false);
   const [alert, setAlert] = useState(null);
@@ -128,7 +132,12 @@ function App() {
         const response = await axios.get("http://localhost:3000/api/orders");
 
         setRecords(response.data);
+        setOriginalRecords(response.data);
+
         setProcessedRecords(response.data.filter((order) => !order.processed));
+        setOriginalProcessedRecords(
+          response.data.filter((order) => !order.processed)
+        );
       } catch (error) {
         console.error("Error retrieving orders:", error);
       }
@@ -171,13 +180,29 @@ function App() {
     fetchPackages();
   }, []);
 
-  const handleFilter = (e) => {
+  const handleProcessedFilter = (e) => {
     const searchNumber = e.target.value;
-    const newFilter = records.filter((row) => {
-      return row.reference.includes(searchNumber);
-    });
 
-    setRecords(newFilter);
+    if (searchNumber === "") {
+      setProcessedRecords(originalProcessedRecords);
+    } else {
+      const newFilter = originalProcessedRecords.filter((row) =>
+        row.reference.includes(searchNumber)
+      );
+      setProcessedRecords(newFilter);
+    }
+  };
+
+  const handleAllFilter = (e) => {
+    const searchNumber = e.target.value;
+    if (searchNumber === "") {
+      setRecords(originalRecords);
+    } else {
+      const newFilter = originalRecords.filter((row) =>
+        row.reference.includes(searchNumber)
+      );
+      setRecords(newFilter);
+    }
   };
 
   const handleMarkAsProcessed = async (id) => {
@@ -260,7 +285,9 @@ function App() {
         records,
         handleMarkAsProcessed,
         processedRecords,
-        handleFilter,
+
+        handleAllFilter,
+        handleProcessedFilter,
         alert,
         isAuthenticated,
         setIsAuthenticated,
