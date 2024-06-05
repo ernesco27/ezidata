@@ -1,12 +1,13 @@
 import React from "react";
 import ReactApexChart from "react-apexcharts";
 
-function Chart() {
+function Chart({ orderCount }) {
   // Data for the bar chart
+
   const series = [
     {
       name: "Sales",
-      data: [30, 40, 45, 50, 49, 60, 70],
+      data: orderCount,
     },
   ];
 
@@ -22,7 +23,7 @@ function Chart() {
       },
     },
     xaxis: {
-      categories: ["Mon", "Tue", "Wed", "Thur", "Fri", "Sat", "Sun"],
+      categories: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
     },
     fill: {
       colors: ["#5e72e4"],

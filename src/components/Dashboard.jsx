@@ -1,12 +1,30 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Table } from "./DataTable";
 import { Chart } from "./Chart";
 import { Analytics } from "./Analytics";
 import { networkContext } from "./App";
 
 function Dashboard() {
-  const { records, processedRecords, handleMarkAsProcessed, handleFilter } =
-    useContext(networkContext);
+  const {
+    records,
+    processedRecords,
+    handleMarkAsProcessed,
+    handleFilter,
+    getWeeklyOrderCount,
+  } = useContext(networkContext);
+  const [totalSales, setTotalSales] = useState(0);
+
+  useEffect(() => {
+    //calculate sales from records
+
+    const totalAmount = records.reduce(
+      (total, record) => total + Number(record.price),
+      0
+    );
+
+    setTotalSales(totalAmount);
+    console.log(totalSales);
+  }, [records]);
 
   return (
     <div>
@@ -24,7 +42,8 @@ function Dashboard() {
         <div className="pl-7 bg-lime-500 h-36 rounded-md shadow-md">
           <Analytics
             title="Total Sales"
-            count="GH¢500"
+            unit="GH¢"
+            count={totalSales}
             percentage={6.5}
             extra="GH¢100"
           />
@@ -32,7 +51,7 @@ function Dashboard() {
         <div className="pl-7 bg-pink-400 h-36 rounded-md shadow-md">
           <Analytics
             title="Total Orders"
-            count="150"
+            count={records.length}
             percentage={10}
             extra="60"
           />
@@ -40,7 +59,7 @@ function Dashboard() {
         <div className="pl-7 bg-fuchsia-500 h-36 rounded-md shadow-md">
           <Analytics
             title="Total Site Visits"
-            count="500"
+            count={500}
             percentage={22}
             extra="160"
           />
@@ -56,7 +75,7 @@ function Dashboard() {
           </div>
         </div>
         <div className="bg-cyan-200 bg-teal-500 rounded-md ">
-          <Chart />
+          <Chart orderCount={getWeeklyOrderCount()} />
         </div>
       </div>
     </div>

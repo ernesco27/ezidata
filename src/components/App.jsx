@@ -230,6 +230,24 @@ function App() {
     setAlert(false);
   };
 
+  // Function to calculate weekly order count
+  const getWeeklyOrderCount = () => {
+    const orderCount = [0, 0, 0, 0, 0, 0, 0]; // Initialize order count for each day of the week (Sun-Sat)
+    records.forEach((record) => {
+      const [day, month, year] = record.date.split("/");
+      const date = new Date(`${year}-${month}-${day}`);
+
+      if (!isNaN(date.getTime())) {
+        // Check if date is valid
+        const dayOfWeek = date.getDay(); // Get the day of the week (0 for Sunday, 1 for Monday, etc.)
+
+        orderCount[dayOfWeek] += 1; // Increment the order count for the respective day
+      }
+    });
+
+    return orderCount;
+  };
+
   return (
     <networkContext.Provider
       value={{
@@ -248,6 +266,7 @@ function App() {
         setIsAuthenticated,
         loadingNetwork,
         loadingPackage,
+        getWeeklyOrderCount,
       }}
     >
       <div className={style.container}>

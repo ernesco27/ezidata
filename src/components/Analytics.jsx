@@ -25,6 +25,7 @@ function Analytics({
   percentage,
   isLoss,
   extra,
+  unit,
 }) {
   return (
     <div className="">
@@ -35,7 +36,7 @@ function Analytics({
         <Grid container alignItems="center">
           <Grid item>
             <Typography variant="h4" color="inherit">
-              {count}
+              {unit} {count}
             </Typography>
           </Grid>
           {percentage && (
@@ -77,7 +78,7 @@ function Analytics({
 Analytics.propTypes = {
   color: PropTypes.string,
   title: PropTypes.string,
-  // count: PropTypes.string,
+  count: PropTypes.number,
   percentage: PropTypes.number,
   isLoss: PropTypes.bool,
   extra: PropTypes.string,
