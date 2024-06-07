@@ -6,6 +6,9 @@ import { Footer } from "./Footer";
 import style from "../styles/App.module.css";
 import axios from "axios";
 import { AlertNote } from "./Alert";
+import dotenv from "dotenv";
+
+dotenv.config();
 
 const networkContext = createContext({
   network: [],
@@ -36,6 +39,9 @@ function App() {
     localStorage.getItem("username") || ""
   );
 
+  const apiBaseUrl =
+    process.env.EZIDATA_BASE_API_URL || "http://localhost:3000";
+
   useEffect(() => {
     const user = localStorage.getItem("username");
     setLoggedUser(user);
@@ -53,10 +59,7 @@ function App() {
     };
 
     try {
-      const response = axios.post(
-        "http://localhost:3000/api/networks",
-        newNetwork
-      );
+      const response = axios.post(apiBaseUrl, newNetwork);
 
       setNetwork((prevNetwork) => [...prevNetwork, newNetwork]);
       setAlert({
@@ -83,7 +86,7 @@ function App() {
 
     try {
       const response = axios.post(
-        "http://localhost:3000/api/packages",
+        `${apiBaseUrl}/api/packages`,
         newNetworkPackage
       );
 
@@ -123,7 +126,7 @@ function App() {
     };
 
     try {
-      const response = axios.post("http://localhost:3000/api/orders", newOrder);
+      const response = axios.post(`${apiBaseUrl}/api/orders`, newOrder);
 
       setOrder((prevOrder) => [...prevOrder, newOrder]);
       setAlert({
@@ -139,7 +142,7 @@ function App() {
   useEffect(() => {
     const fetchOrders = async () => {
       try {
-        const response = await axios.get("http://localhost:3000/api/orders");
+        const response = await axios.get(`${apiBaseUrl}/api/orders`);
 
         setRecords(response.data);
         setOriginalRecords(response.data);
@@ -160,7 +163,7 @@ function App() {
     const fetchNetworks = async () => {
       setLoadingNetwork(true);
       try {
-        const response = await axios.get("http://localhost:3000/api/networks");
+        const response = await axios.get(`${apiBaseUrl}/api/networks`);
 
         setNetwork(response.data);
       } catch (error) {
@@ -177,7 +180,7 @@ function App() {
     const fetchPackages = async () => {
       setLoadingPackage(true);
       try {
-        const response = await axios.get("http://localhost:3000/api/packages");
+        const response = await axios.get(`${apiBaseUrl}/api/packages`);
 
         setNetworkPackage(response.data);
       } catch (error) {
@@ -229,7 +232,7 @@ function App() {
 
     try {
       // Update the order status in the backend
-      await axios.put(`http://localhost:3000/api/orders/${id}`, {
+      await axios.put(`${apiBaseUrl}/api/orders/${id}`, {
         processed: updatedStatus,
       });
 
