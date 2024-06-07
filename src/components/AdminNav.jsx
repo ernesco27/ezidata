@@ -1,7 +1,7 @@
 import React, { useState, useContext } from "react";
 
 import { styled, alpha, useTheme } from "@mui/material/styles";
-//import AppBar from "@mui/material/AppBar";
+
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import IconButton from "@mui/material/IconButton";
@@ -11,9 +11,13 @@ import Badge from "@mui/material/Badge";
 import MenuItem from "@mui/material/MenuItem";
 import Menu from "@mui/material/Menu";
 import MenuIcon from "@mui/icons-material/Menu";
-import SearchIcon from "@mui/icons-material/Search";
+
 import AccountCircle from "@mui/icons-material/AccountCircle";
-import MailIcon from "@mui/icons-material/Mail";
+
+import TableChartRoundedIcon from "@mui/icons-material/TableChartRounded";
+import Inventory2RoundedIcon from "@mui/icons-material/Inventory2Rounded";
+import ShoppingCartRoundedIcon from "@mui/icons-material/ShoppingCartRounded";
+import SettingsRoundedIcon from "@mui/icons-material/SettingsRounded";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import MoreIcon from "@mui/icons-material/MoreVert";
 import Drawer from "@mui/material/Drawer";
@@ -26,9 +30,9 @@ import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
-import InboxIcon from "@mui/icons-material/MoveToInbox";
+
 import { Link } from "react-router-dom";
-import axios from "axios";
+
 import { useNavigate } from "react-router-dom";
 import { networkContext } from "./App";
 
@@ -78,16 +82,17 @@ function AdminNav() {
   const [anchorEl, setAnchorEl] = useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState(null);
   const [open, setOpen] = useState(false);
-  const [error, setError] = useState("");
 
   const navigate = useNavigate();
 
-  const { setIsAuthenticated } = useContext(networkContext);
+  const { setIsAuthenticated, records, processedRecords } =
+    useContext(networkContext);
 
   const handleLogout = async () => {
     handleMenuClose();
 
     localStorage.removeItem("isAuthenticated");
+
     setIsAuthenticated(false);
     navigate("/auth");
   };
@@ -139,7 +144,6 @@ function AdminNav() {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
       <MenuItem onClick={handleLogout}>Logout</MenuItem>
     </Menu>
   );
@@ -162,26 +166,14 @@ function AdminNav() {
       onClose={handleMobileMenuClose}
     >
       <MenuItem>
-        <IconButton size="large" aria-label="show 4 new mails" color="inherit">
-          <Badge badgeContent={4} color="error">
-            <MailIcon />
-          </Badge>
-        </IconButton>
-        <p>Messages</p>
-      </MenuItem>
-      <MenuItem>
-        <IconButton
-          size="large"
-          aria-label="show 17 new notifications"
-          color="inherit"
-        >
-          <Badge badgeContent={17} color="error">
+        <IconButton size="large" aria-label="new notifications" color="inherit">
+          <Badge badgeContent={processedRecords.length} color="error">
             <NotificationsIcon />
           </Badge>
         </IconButton>
         <p>Notifications</p>
       </MenuItem>
-      <MenuItem onClick={handleProfileMenuOpen}>
+      <MenuItem onClick={handleLogout}>
         <IconButton
           size="large"
           aria-label="account of current user"
@@ -191,7 +183,7 @@ function AdminNav() {
         >
           <AccountCircle />
         </IconButton>
-        <p>Profile</p>
+        <p>Logout</p>
       </MenuItem>
     </Menu>
   );
@@ -210,14 +202,19 @@ function AdminNav() {
           >
             <MenuIcon />
           </IconButton>
-          <Typography
-            variant="h6"
-            noWrap
-            component="div"
-            sx={{ display: { xs: "none", sm: "block" } }}
+
+          <Box
+            sx={{
+              flexGrow: 1,
+              display: { xs: "block", sm: "block" },
+            }}
           >
-            EziData
-          </Typography>
+            <img
+              className=" h-14 w-auto"
+              src="/src/assets/images/logo.png"
+              alt="EziData Logo"
+            />
+          </Box>
 
           <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: { xs: "none", md: "flex" } }}>
@@ -226,16 +223,16 @@ function AdminNav() {
               aria-label="show 4 new mails"
               color="inherit"
             >
-              <Badge badgeContent={4} color="error">
+              {/* <Badge badgeContent={4} color="error">
                 <MailIcon />
-              </Badge>
+              </Badge> */}
             </IconButton>
             <IconButton
               size="large"
-              aria-label="show 17 new notifications"
+              aria-label="show new notifications"
               color="inherit"
             >
-              <Badge badgeContent={17} color="error">
+              <Badge badgeContent={processedRecords.length} color="error">
                 <NotificationsIcon />
               </Badge>
             </IconButton>
@@ -294,10 +291,10 @@ function AdminNav() {
               <Link to={`/admin/${text}`}>
                 <ListItemButton>
                   <ListItemIcon>
-                    {text === "Dashboard" ? <MailIcon /> : null}
-                    {text === "Packages" ? <MailIcon /> : null}
-                    {text === "Configuration" ? <MailIcon /> : null}
-                    {text === "Orders" ? <MailIcon /> : null}
+                    {text === "Dashboard" ? <TableChartRoundedIcon /> : null}
+                    {text === "Packages" ? <Inventory2RoundedIcon /> : null}
+
+                    {text === "Orders" ? <ShoppingCartRoundedIcon /> : null}
                   </ListItemIcon>
                   <ListItemText primary={text} />
                 </ListItemButton>
@@ -311,7 +308,7 @@ function AdminNav() {
             <ListItem key={text} disablePadding>
               <ListItemButton>
                 <ListItemIcon>
-                  {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+                  {text === "Configuration" ? <SettingsRoundedIcon /> : null}
                 </ListItemIcon>
                 <ListItemText primary={text} />
               </ListItemButton>

@@ -9,9 +9,9 @@ function Dashboard() {
     records,
     processedRecords,
     handleMarkAsProcessed,
-
     handleProcessedFilter,
     getWeeklyOrderCount,
+    loggedUser,
   } = useContext(networkContext);
   const [totalSales, setTotalSales] = useState(0);
 
@@ -24,12 +24,16 @@ function Dashboard() {
     );
 
     setTotalSales(totalAmount);
-    console.log(totalSales);
   }, [records]);
+
+  const storedUsername = localStorage.getItem("username");
 
   return (
     <div>
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-6 m-6 mt-24">
+      <p className="mt-20 ml-8 text-lg  sm:text-2xl font-semibold">
+        Welcome, {loggedUser || storedUsername}!
+      </p>
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-6 m-6 mt-15">
         <div className="pl-7 bg-cyan-400 h-36 rounded-md shadow-md">
           <Analytics
             title="New Orders"

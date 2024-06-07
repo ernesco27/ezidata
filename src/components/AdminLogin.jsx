@@ -10,7 +10,8 @@ function AdminLogin() {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
-  const { isAuthenticated, setIsAuthenticated } = useContext(networkContext);
+  const { isAuthenticated, setIsAuthenticated, setLoggedUser } =
+    useContext(networkContext);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -27,31 +28,22 @@ function AdminLogin() {
       });
 
       if (response.ok) {
+        const data = await response.json();
+
         setIsAuthenticated(true);
         localStorage.setItem("isAuthenticated", "true"); // Set authentication status
+        localStorage.setItem("username", data.username);
+        setLoggedUser(data.username);
         navigate("/admin/dashboard"); // Redirect to dashboard on successful login
       } else {
         const data = await response.json();
         setError(data.message || "An error occurred");
       }
     } catch (err) {
-      setError("An error occurred. Please try again.");
+      setError("Login failed. Please check your credentials and try again.");
     } finally {
       setLoading(false);
     }
-    //   try {
-    //     const response = await axios.post("http://localhost:3000/login", {
-    //       username,
-    //       password,
-    //     });
-    //     if (response.data.message === "Logged in successfully") {
-    //       localStorage.setItem("isAuthenticated", "true");
-    //       setIsAuthenticated(true);
-    //       navigate("/admin/dashboard"); // Redirect to dashboard on successful login
-    //     }
-    //   } catch (error) {
-    //     console.error("Error logging in:", error);
-    //   }
   };
 
   return (

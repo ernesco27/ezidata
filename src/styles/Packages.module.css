@@ -17,6 +17,8 @@
   gap: 1.5rem;
   flex-wrap: wrap;
   padding: 0 1rem;
+  justify-content: center;
+  align-items: center;
 }
 
 .mainSection {
@@ -26,4 +28,9 @@
   align-items: center;
   gap: 1rem;
   padding-top: 1.5rem;
+}
+
+.mainSection > h1 {
+  font-weight: 600;
+  font-size: 1.5rem;
 }

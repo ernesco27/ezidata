@@ -12,6 +12,7 @@ const networkContext = createContext({
   addNetwork: () => {},
   addPackage: () => {},
   sendOrder: () => {},
+  username: "",
 });
 
 function App() {
@@ -30,6 +31,15 @@ function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(() => {
     return !!localStorage.getItem("isAuthenticated");
   });
+
+  const [loggedUser, setLoggedUser] = useState(
+    localStorage.getItem("username") || ""
+  );
+
+  useEffect(() => {
+    const user = localStorage.getItem("username");
+    setLoggedUser(user);
+  }, [loggedUser]);
 
   const addNetwork = (networkName, imageUrl, description, to) => {
     const newNetwork = {
@@ -294,6 +304,8 @@ function App() {
         loadingNetwork,
         loadingPackage,
         getWeeklyOrderCount,
+        loggedUser,
+        setLoggedUser,
       }}
     >
       <div className={style.container}>
