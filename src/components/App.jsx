@@ -8,8 +8,6 @@ import axios from "axios";
 import { AlertNote } from "./Alert";
 import dotenv from "dotenv";
 
-dotenv.config();
-
 const networkContext = createContext({
   network: [],
   addNetwork: () => {},
@@ -39,8 +37,7 @@ function App() {
     localStorage.getItem("username") || ""
   );
 
-  const apiBaseUrl =
-    process.env.EZIDATA_BASE_API_URL || "http://localhost:3000";
+  const apiBaseUrl = "http://localhost:3000";
 
   useEffect(() => {
     const user = localStorage.getItem("username");
