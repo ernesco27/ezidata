@@ -6,8 +6,7 @@ import {
 import { App } from "../components/App";
 import { ErrorPage } from "../components/ErrorPage";
 import { Home } from "../components/Home";
-import { Airteltigo } from "./Airteltigo";
-import { Mtn } from "./Mtn";
+
 import { AdminLogin } from "./AdminLogin";
 import { AdminArea } from "../components/AdminArea";
 import { Dashboard } from "./Dashboard";
