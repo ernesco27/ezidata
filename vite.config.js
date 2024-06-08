@@ -20,9 +20,9 @@ export default defineConfig({
     },
     chunkSizeWarningLimit: 1000, // Adjust this limit if necessary
   },
-  server: {
-    host: true,
-    strictPort: true,
-    port: 8080,
-  },
+  // server: {
+  //   host: true,
+  //   strictPort: true,
+  //   port: 8080,
+  // },
 });
