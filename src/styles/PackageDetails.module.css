@@ -1,5 +1,5 @@
 .mtnHeader {
-  background-image: url("../assets/images/mtn-header.png");
+  background-image: url("/images/mtn-header.png");
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
@@ -8,7 +8,7 @@
 }
 
 .atHeader {
-  background-image: url("../assets/images/at-header.png");
+  background-image: url("/images/at-header.png");
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
@@ -17,7 +17,7 @@
 }
 
 .telecelHeader {
-  background-image: url("../assets/images/telecel-header.png");
+  background-image: url("/images/telecel-header.png");
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;

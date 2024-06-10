@@ -8,8 +8,8 @@ import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 
 // assets
-// import RiseOutlined from "@ant-design/icons/RiseOutlined";
-// import FallOutlined from "@ant-design/icons/FallOutlined";
+import RiseOutlined from "@ant-design/icons/RiseOutlined";
+import FallOutlined from "@ant-design/icons/FallOutlined";
 
 const iconSX = {
   fontSize: "0.75rem",
@@ -39,7 +39,7 @@ function Analytics({
               {unit} {count}
             </Typography>
           </Grid>
-          {/* {percentage && (
+          {percentage && (
             <Grid item>
               <Chip
                 variant="combined"
@@ -56,7 +56,7 @@ function Analytics({
                 size="small"
               />
             </Grid>
-          )} */}
+          )}
         </Grid>
       </Stack>
       <Box sx={{ pt: 2.25 }}>

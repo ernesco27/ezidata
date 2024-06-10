@@ -211,7 +211,7 @@ function AdminNav() {
           >
             <img
               className=" h-14 w-auto"
-              src="/src/assets/images/logo.png"
+              src="/images/logo.png"
               alt="EziData Logo"
             />
           </Box>
@@ -222,11 +222,7 @@ function AdminNav() {
               size="large"
               aria-label="show 4 new mails"
               color="inherit"
-            >
-              {/* <Badge badgeContent={4} color="error">
-                <MailIcon />
-              </Badge> */}
-            </IconButton>
+            ></IconButton>
             <IconButton
               size="large"
               aria-label="show new notifications"

@@ -32,7 +32,7 @@ function NavBar(props) {
       <Box sx={{ flexGrow: 1, display: { sm: "block" } }}>
         <img
           className=" h-14 w-auto"
-          src="src/assets/images/logo.png"
+          src="/images/logo.png"
           alt="EziData Logo"
         />
       </Box>
@@ -75,7 +75,7 @@ function NavBar(props) {
           >
             <img
               className=" h-14 w-auto"
-              src="src/assets/images/logo.png"
+              src="/images/logo.png"
               alt="EziData Logo"
             />
           </Box>

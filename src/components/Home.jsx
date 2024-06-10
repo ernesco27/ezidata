@@ -14,7 +14,7 @@ function Home() {
       <header>
         <div className={style.imageDiv}>
           <img
-            src="src/assets/images/large-header.png"
+            src="/images/large-header.png"
             alt="header image with social logos"
           />
         </div>
