@@ -8,8 +8,10 @@ import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 
 // assets
-import RiseOutlined from "@ant-design/icons/RiseOutlined";
-import FallOutlined from "@ant-design/icons/FallOutlined";
+// import RiseOutlined from "@ant-design/icons/RiseOutlined";
+// import FallOutlined from "@ant-design/icons/FallOutlined";
+
+import { RiseOutlined, FallOutlined } from "@ant-design/icons";
 
 const iconSX = {
   fontSize: "0.75rem",
