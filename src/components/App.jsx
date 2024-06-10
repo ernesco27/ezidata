@@ -14,9 +14,9 @@ const networkContext = createContext({
   addPackage: () => {},
   sendOrder: () => {},
   username: "",
-  addNetwork: () => {},
+
   addNetworkPackage: () => {},
-  sendOrder: () => {},
+
   handleMarkAsProcessed: () => {},
   handleAllFilter: () => {},
   handleProcessedFilter: () => {},
