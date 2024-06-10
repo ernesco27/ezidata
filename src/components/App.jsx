@@ -28,7 +28,7 @@ const networkContext = createContext({
   loadingPackage: null,
   alert: null,
   isAuthenticated: () => {},
-  loggedUser,
+  loggedUser: "",
 });
 
 function App() {
