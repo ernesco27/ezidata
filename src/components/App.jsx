@@ -37,7 +37,8 @@ function App() {
     localStorage.getItem("username") || ""
   );
 
-  const apiBaseUrl = "http://localhost:3000";
+  //const apiBaseUrl = "http://localhost:3000";
+  const apiBaseUrl = "https://ezidata-api.adaptable.app";
 
   useEffect(() => {
     const user = localStorage.getItem("username");

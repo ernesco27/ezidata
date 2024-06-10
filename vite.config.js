@@ -28,9 +28,9 @@ export default defineConfig({
   server: {
     port: 5173,
   },
-  build: {
-    outDir: "dist",
-  },
+  // build: {
+  //   outDir: "dist",
+  // },
   preview: {
     port: 8080,
   },
