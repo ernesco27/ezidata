@@ -20,17 +20,9 @@ export default defineConfig({
     },
     chunkSizeWarningLimit: 1000, // Adjust this limit if necessary
   },
-  //  server: {
-  //    host: true,
-  //    strictPort: true,
-  //    port: 8080,
-  //  },
   server: {
-    port: 5173,
+    port: 8080,
   },
-  // build: {
-  //   outDir: "dist",
-  // },
   preview: {
     port: 8080,
   },
