@@ -14,6 +14,21 @@ const networkContext = createContext({
   addPackage: () => {},
   sendOrder: () => {},
   username: "",
+  addNetwork: () => {},
+  addNetworkPackage: () => {},
+  sendOrder: () => {},
+  handleMarkAsProcessed: () => {},
+  handleAllFilter: () => {},
+  handleProcessedFilter: () => {},
+  getWeeklyOrderCount: () => {},
+  order: [],
+  records: [],
+  originalProcessedRecords: [],
+  loadingNetwork: null,
+  loadingPackage: null,
+  alert: null,
+  isAuthenticated: () => {},
+  loggedUser,
 });
 
 function App() {

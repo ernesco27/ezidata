@@ -4,9 +4,9 @@ import react from "@vitejs/plugin-react";
 export default defineConfig({
   plugins: [react()],
   build: {
+    outDir: "dist",
     rollupOptions: {
       output: {
-        outDir: "dist",
         manualChunks(id) {
           if (id.includes("node_modules")) {
             return id
@@ -18,7 +18,7 @@ export default defineConfig({
         },
       },
     },
-    chunkSizeWarningLimit: 1000, // Adjust this limit if necessary
+    chunkSizeWarningLimit: 1000,
   },
   server: {
     port: 8080,
