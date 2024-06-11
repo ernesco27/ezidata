@@ -6,9 +6,6 @@ import { Footer } from "./Footer";
 import style from "../styles/App.module.css";
 import axios from "axios";
 import { AlertNote } from "./Alert";
-import dotenv from "dotenv";
-
-dotenv.config();
 
 const networkContext = createContext({
   network: [],
@@ -56,7 +53,7 @@ function App() {
   );
 
   //const apiBaseUrl = "http://localhost:3000";
-  const apiBaseUrl = process.env.BACKEND_API;
+  const apiBaseUrl = "https://ezidata-api.adaptable.app";
 
   useEffect(() => {
     const user = localStorage.getItem("username");
