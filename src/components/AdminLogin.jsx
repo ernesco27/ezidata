@@ -10,7 +10,7 @@ function AdminLogin() {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
-  const { isAuthenticated, setIsAuthenticated, setLoggedUser } =
+  const { isAuthenticated, setIsAuthenticated, setLoggedUser, apiBaseUrl } =
     useContext(networkContext);
 
   const handleSubmit = async (e) => {
@@ -19,7 +19,7 @@ function AdminLogin() {
     setLoading(true);
 
     try {
-      const response = await fetch("http://localhost:3000/login", {
+      const response = await fetch(`${apiBaseUrl}/login`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -51,7 +51,7 @@ function AdminLogin() {
       <div className="sm:mx-auto sm:w-full sm:max-w-sm">
         <img
           className="mx-auto h-20 w-auto"
-          src="src/assets/images/logo.png"
+          src="/images/logo.png"
           alt="EziData Logo"
         />
         <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">

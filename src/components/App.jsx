@@ -8,6 +8,8 @@ import axios from "axios";
 import { AlertNote } from "./Alert";
 import dotenv from "dotenv";
 
+dotenv.config();
+
 const networkContext = createContext({
   network: [],
   addNetwork: () => {},
@@ -29,6 +31,7 @@ const networkContext = createContext({
   alert: null,
   isAuthenticated: () => {},
   loggedUser: "",
+  apiBaseUrl: "",
 });
 
 function App() {
@@ -52,8 +55,8 @@ function App() {
     localStorage.getItem("username") || ""
   );
 
-  const apiBaseUrl = "http://localhost:3000";
-  //const apiBaseUrl = "https://ezidata-api.adaptable.app";
+  //const apiBaseUrl = "http://localhost:3000";
+  const apiBaseUrl = process.env.BACKEND_API;
 
   useEffect(() => {
     const user = localStorage.getItem("username");
@@ -322,6 +325,7 @@ function App() {
         getWeeklyOrderCount,
         loggedUser,
         setLoggedUser,
+        apiBaseUrl,
       }}
     >
       <div className={style.container}>
