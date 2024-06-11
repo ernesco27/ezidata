@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 
 import { styled, alpha, useTheme } from "@mui/material/styles";
 
@@ -30,6 +30,8 @@ import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
+
+import { Sidebar, SidebarItem } from "./Sidebar";
 
 import { Link } from "react-router-dom";
 
@@ -84,6 +86,19 @@ function AdminNav() {
   const [open, setOpen] = useState(false);
 
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (open && !e.target.closest(".MuiDrawer-paper")) {
+        handleDrawerClose();
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [open]);
 
   const { setIsAuthenticated, records, processedRecords } =
     useContext(networkContext);
@@ -258,6 +273,7 @@ function AdminNav() {
           </Box>
         </Toolbar>
       </AppBar>
+
       <Drawer
         sx={{
           width: drawerWidth,

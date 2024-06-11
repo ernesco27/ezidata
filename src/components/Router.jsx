@@ -6,6 +6,9 @@ import {
 import { App } from "../components/App";
 import { ErrorPage } from "../components/ErrorPage";
 import { Home } from "../components/Home";
+import { About } from "./About";
+import { Contact } from "./Contact";
+import { PrivacyPolicy } from "./PrivacyPolicy";
 
 import { AdminLogin } from "./AdminLogin";
 import { AdminArea } from "../components/AdminArea";
@@ -42,6 +45,18 @@ function Router() {
         {
           path: "/auth",
           element: <AdminLogin />,
+        },
+        {
+          path: "/about",
+          element: <About />,
+        },
+        {
+          path: "/contact",
+          element: <Contact />,
+        },
+        {
+          path: "/privacy-policy",
+          element: <PrivacyPolicy />,
         },
         {
           path: "/admin",
