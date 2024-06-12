@@ -42,6 +42,7 @@ function NavBar(props) {
         {navItems.map((item) => (
           <ListItem key={item} disablePadding>
             <Link
+              key={item}
               to={
                 item === "Home"
                   ? "/"
@@ -95,6 +96,7 @@ function NavBar(props) {
           <Box sx={{ display: { xs: "none", sm: "block" } }}>
             {navItems.map((item) => (
               <Link
+                key={item}
                 to={
                   item === "Home"
                     ? "/"
@@ -105,9 +107,7 @@ function NavBar(props) {
                     : null
                 }
               >
-                <Button key={item} sx={{ color: "#fff" }}>
-                  {item}
-                </Button>
+                <Button sx={{ color: "#fff" }}>{item}</Button>
               </Link>
             ))}
           </Box>
