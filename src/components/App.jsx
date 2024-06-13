@@ -72,14 +72,14 @@ function App() {
     };
 
     try {
-      const response = axios.post(apiBaseUrl, newNetwork);
+      const response = axios.post(`${apiBaseUrl}/api/networks`, newNetwork);
 
       setNetwork((prevNetwork) => [...prevNetwork, newNetwork]);
       setAlert({
         severity: "success",
         message: "Network Added successfully",
       });
-      setLoading(true);
+      //setLoading(true);
     } catch (error) {
       console.error("Error adding newtork:", error);
       throw error;

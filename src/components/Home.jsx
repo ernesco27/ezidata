@@ -5,6 +5,26 @@ import { NetworkCard } from "./NetworkCard";
 import { networkContext } from "./App";
 import Skeleton from "@mui/material/Skeleton";
 import Stack from "@mui/material/Stack";
+import { SlideShow } from "./SlideShow";
+
+const slides = [
+  {
+    image: "/images/large-header.png",
+    alt: "header image with social logos",
+  },
+  {
+    image: "/images/large-header2.png",
+    alt: "header image",
+  },
+  {
+    image: "/images/large-header3.png",
+    alt: "header image",
+  },
+  {
+    image: "/images/large-header4.png",
+    alt: "header image",
+  },
+];
 
 function Home() {
   const { network, loadingNetwork } = useContext(networkContext);
@@ -13,10 +33,11 @@ function Home() {
     <div className={style.container}>
       <header>
         <div className={style.imageDiv}>
-          <img
+          <SlideShow slides={slides} />
+          {/* <img
             src="/images/large-header.png"
             alt="header image with social logos"
-          />
+          /> */}
         </div>
       </header>
       <main className={style.mainSection}>
