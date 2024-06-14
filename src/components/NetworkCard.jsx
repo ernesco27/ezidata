@@ -11,7 +11,6 @@ function NetworkCard({ title, image, description }) {
       <CardActionArea component={Link} to={`/network/${title}`}>
         <CardMedia
           component="img"
-          // maxHeight="140"
           sx={{ maxHeight: 140 }}
           image={image}
           alt="image of network provider"

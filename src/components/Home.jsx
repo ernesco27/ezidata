@@ -34,10 +34,6 @@ function Home() {
       <header>
         <div className={style.imageDiv}>
           <SlideShow slides={slides} />
-          {/* <img
-            src="/images/large-header.png"
-            alt="header image with social logos"
-          /> */}
         </div>
       </header>
       <main className={style.mainSection}>
