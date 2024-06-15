@@ -7,7 +7,7 @@ function AlertNote({ severity, message, onClose }) {
   return (
     <div
       className={
-        "z-10 fixed top-0 left-0 right-0 text-center translate-y-14 animate-slide md:max-w-lg md:mx-auto "
+        "max-w-xs z-10 fixed top-0 left-0 right-0 text-center translate-y-14 animate-slide md:max-w-lg md:mx-auto "
       }
     >
       <Alert variant="filled" severity={severity} onClose={onClose}>

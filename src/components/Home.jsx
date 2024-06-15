@@ -65,13 +65,14 @@ function Home() {
               </div>
             </div>
           ) : (
-            network.map((item) => (
+            network.map((item, index) => (
               <NetworkCard
                 key={item._id}
                 title={item.networkName}
                 image={item.imageUrl}
                 description={item.description}
                 to={item.to}
+                delay={index * 0.2}
               />
             ))
           )}

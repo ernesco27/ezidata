@@ -41,16 +41,6 @@ function PackageDetails() {
     (pkg) => pkg.network.toLowerCase() === networkName.toLowerCase()
   );
 
-  // if (filteredPackages.length === 0) {
-  //   return (
-  //     <div>
-  //       <Stack>
-  //         <Skeleton variant="rectangular" width={210} height={118} />
-  //       </Stack>
-  //     </div>
-  //   );
-  // }
-
   return (
     <div>
       <header
@@ -91,13 +81,14 @@ function PackageDetails() {
           </div>
         </div>
       ) : (
-        filteredPackages.map((item) => (
+        filteredPackages.map((item, index) => (
           <ProductCard
             key={item._id}
             volume={item.volume}
             price={item.price}
             unit={item.unit}
             onBuyNow={() => handleBuyNow(item)}
+            delay={index * 0.2}
           />
         ))
       )}

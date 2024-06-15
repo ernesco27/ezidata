@@ -9,7 +9,7 @@ import ListItemText from "@mui/material/ListItemText";
 function Footer() {
   const [dateInfo, setDateInfo] = useState(0);
 
-  const navItems = ["Home", "About", "Contact", "Privacy Policy"];
+  const navItems = ["Home", "About", "Contact", "Privacy"];
 
   useEffect(() => {
     const date = new Date().getFullYear();
@@ -31,7 +31,7 @@ function Footer() {
                   ? "/contact"
                   : item === "About"
                   ? "/about"
-                  : item === "Privacy Policy"
+                  : item === "Privacy"
                   ? "/privacy-policy"
                   : null
               }
